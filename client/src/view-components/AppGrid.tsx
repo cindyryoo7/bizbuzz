@@ -1,10 +1,10 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import Header from '../view-components/Header';
-import BusinessList from '../controller-components/BusinessList';
+import Routes from '../controller-components/Routes';
 
 const useStyles = makeStyles((/* theme */) => ({
   root: {
+    flexGrow: 1,
     fontSize: "20px",
     color: "#303C6C",
     backgroundColor: "#fbe8a6",
@@ -23,8 +23,7 @@ const AppGrid = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Header />
-      <BusinessList />
+      <Routes />
     </Grid>
   )
 }

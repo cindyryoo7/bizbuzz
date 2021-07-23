@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Business } from '../models/business';
 import { Grid } from '@material-ui/core';
 
-function BusinessList() {
+const BusinessList = () => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
 
   useEffect(() => {
