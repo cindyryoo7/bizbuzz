@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Toolbar, InputBase, makeStyles, Theme, alpha, Typography } from '@material-ui/core';
+import axios from 'axios';
+import { AppBar, Toolbar, InputBase, makeStyles, Theme, alpha, Typography, Input, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 
@@ -30,17 +31,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: "100%"
+    border: "none",
+    background: "transparent"
   },
   text: {
+    color: 'inherit',
+    width: "100%",
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
-    width: '100%',
   },
   location: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -53,12 +53,22 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type Props = {
-  setLocation: (location: number[]) => void,
+  setLocation: (location: number[] | string) => void,
   setLoading: (loading: boolean) => void
 }
 
 const SearchBar = (props: Props) => {
   const classes = useStyles();
+  const [value, setValue] = useState<string>("");
+
+  const handleSubmit = () => {
+    props.setLoading(true);
+    handleSearchLocation(value);
+  }
+
+  const handleSearchLocation = (location: string): void => {
+    props.setLocation(location);
+  }
 
   const handleLocationPermission = () => {
     props.setLoading(true);
@@ -68,22 +78,47 @@ const SearchBar = (props: Props) => {
     })
   }
 
+  // const handleKeyDown = (e: any) => {
+  //   switch(e.key) {
+  //     case 'Enter':
+  //       handleSearchLocation(value);
+  //       break;
+  //     case 'Backspace':
+  //       setValue(value.substring(0, value.length - 1))
+  //       break;
+  //     case 'Delete':
+  //       setValue("")
+  //       break;
+  //     case 'Escape':
+  //       break;
+  //     default:
+  //       if (e.key.length === 1) {
+  //         setValue(value.concat(e.key))
+  //       }
+  //   }
+  // }
+
+  const handleChange = (e: any) => {
+    setValue(e.target.value);
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <div className={classes.toolbar}>
-            <div className={classes.icon}>
+            {/* <div className={classes.icon}>
               <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search based on your location..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.text
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
+            </div> */}
+            <form onSubmit={() => {handleSubmit()}}>
+              <label>
+                <input type="text" placeholder="Search by location..." onChange={(e) => {handleChange(e)}}></input>
+              </label>
+              <button className={classes.icon}>
+                <SearchIcon />
+              </button>
+              {/* <input type="submit" value="Submit"></input> */}
+            </form>
           </div>
           <div
             className={classes.toolbar}
@@ -106,3 +141,11 @@ const SearchBar = (props: Props) => {
 }
 
 export default SearchBar;
+
+{/* <TextField
+type="search"
+placeholder="Search based on your location..."
+className={classes.text}
+value={value}
+onKeyDown={(e) => {handleKeyDown(e)}}
+/> */}

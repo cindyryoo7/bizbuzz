@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 type Props = {
-  location: number[],
+  location: number[] | string,
   loading: boolean,
   setLoading: (loading: boolean) => void
 }
@@ -32,14 +32,26 @@ const BusinessList = (props: Props) => {
 
   useEffect(() => {
     if (props.location.length) {
-      getBusinesses(props.location[0].toString(),props.location[1].toString());
+      if (typeof props.location === 'string') {
+        getBusinessesByLocation(props.location)
+      } else {
+        getBusinessesByLatLong(props.location[0].toString(),props.location[1].toString());
+      }
     } else {
-      getBusinesses('37.79118339155342', '-122.40330988014378');// Twitch SF office location
+      getBusinessesByLatLong('37.79118339155342', '-122.40330988014378');// Twitch SF office location
     }
     props.setLoading(false);
   }, [props.location]);
 
-  const getBusinesses = (latitude: string, longitude: string): void => {
+  const getBusinessesByLocation = (location: string): void => {
+    axios
+      .get(`/search/${location}`)
+      .then(result => result.data)
+      .then(result => { setBusinesses(result) })
+      .catch(err => { console.log(err) })
+  }
+
+  const getBusinessesByLatLong = (latitude: string, longitude: string): void => {
     axios
       .get(`/search/${latitude}/${longitude}`)
       .then(result => result.data)

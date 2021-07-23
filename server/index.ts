@@ -3,7 +3,8 @@ import logger from 'morgan';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import {
-  getBusinesses,
+  getBusinessesByLatLong,
+  getBusinessesByAddress,
   getBusinessInfo,
   getBusinessReviews
 } from './controllers/yelp';
@@ -18,12 +19,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get(`/search/:latitude/:longitude`, (req: express.Request, res: express.Response) => {
-  getBusinesses(req.params.latitude, req.params.longitude)
+  getBusinessesByLatLong(req.params.latitude, req.params.longitude)
     .then(response => {
       res.status(200).send(response);
     })
     .catch((err) => {
       res.status(500).send(`Error retrieving list of businesses: ${err}`);
+    })
+})
+
+app.get(`/search/:location`, (req: express.Request, res: express.Response) => {
+  getBusinessesByAddress(req.params.location)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(`Error due to invalid location: ${err}`);
     })
 })
 

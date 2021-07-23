@@ -21,7 +21,7 @@ const useStyles = makeStyles((/* theme */) => ({
 }));
 
 type Props = {
-  setLocation: (location: number[]) => void,
+  setLocation: (location: number[] | string) => void,
   setLoading: (loading: boolean) => void
 }
 

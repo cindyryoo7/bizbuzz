@@ -5,7 +5,7 @@ import BusinessList from './BusinessList';
 import BusinessPage from './BusinessPage';
 
 const Routes = () => {
-  const [location, setLocation] = useState<number[]>([]);
+  const [location, setLocation] = useState<number[] | string>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   return(
