@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_KEY } from '../.env';
+import { YELP_API_KEY } from '../.env';
 
 const BASE_URL = 'https://api.yelp.com/v3/businesses';
 
@@ -9,7 +9,7 @@ export const getBusinessesByLatLong = (latitude: string, longitude: string): Pro
       method: 'get',
       url: `${BASE_URL}/search?latitude=${latitude}&longitude=${longitude}`,
       headers: {
-        'Authorization': `Bearer ${API_KEY}`
+        'Authorization': `Bearer ${YELP_API_KEY}`
       }
     })
     .then(response => {
@@ -27,7 +27,7 @@ export const getBusinessesByAddress = (location: string): Promise<unknown> => {
       method: 'get',
       url: `${BASE_URL}/search?location=${location}`,
       headers: {
-        'Authorization': `Bearer ${API_KEY}`
+        'Authorization': `Bearer ${YELP_API_KEY}`
       }
     })
     .then(response => {
@@ -45,7 +45,7 @@ export const getBusinessInfo = (id: string): Promise<unknown> => {
       method: 'get',
       url: `${BASE_URL}/${id}`,
       headers: {
-        'Authorization': `Bearer ${API_KEY}`
+        'Authorization': `Bearer ${YELP_API_KEY}`
       }
     })
     .then(response => {
@@ -63,7 +63,7 @@ export const getBusinessReviews = (id: string): Promise<unknown> => {
       method: 'get',
       url: `${BASE_URL}/${id}/reviews`,
       headers: {
-        'Authorization': `Bearer ${API_KEY}`
+        'Authorization': `Bearer ${YELP_API_KEY}`
       }
     })
     .then(response => {

@@ -38,7 +38,7 @@ app.get(`/search/:location`, (req: express.Request, res: express.Response) => {
     })
 })
 
-app.get(`/business/:id`, (req: express.Request, res: express.Response) => {
+app.get(`/:id`, (req: express.Request, res: express.Response) => {
   getBusinessInfo(req.params.id)
     .then(response => {
       res.status(200).send(response);
@@ -48,7 +48,7 @@ app.get(`/business/:id`, (req: express.Request, res: express.Response) => {
     })
 })
 
-app.get(`/business/:id/reviews`, (req: express.Request, res: express.Response) => {
+app.get(`/:id/reviews`, (req: express.Request, res: express.Response) => {
   getBusinessReviews(req.params.id)
     .then(response => {
       res.status(200).send(response);

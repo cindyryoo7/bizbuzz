@@ -27,17 +27,23 @@ const BusinessInfo = (props: Props) => {
           </Grid>
         </Grid>
         <Grid container direction="row">
-          {props.details.categories.map((category, index) => (
-            <Chip key={index} label={category.title}/>
-          ))}
+          {props.details.categories && props.details.categories.length
+            ? props.details.categories.map((category, index) => (
+              <Chip key={index} label={category.title}/>
+            ))
+            : null
+          }
         </Grid>
       </Grid>
       <Grid>
         <Typography>Location</Typography>
-        <GoogleMap />
-        {props.details.location.display_address.map(address => (
-          <Typography>{address}</Typography>
-        ))}
+        <GoogleMap location={props.details.coordinates}/>
+        {props.details.location
+        ? props.details.location.display_address.map((address, index) => (
+            <Typography key={index}>{address}</Typography>
+          ))
+        : null
+      }
       </Grid>
 
       <Grid>
