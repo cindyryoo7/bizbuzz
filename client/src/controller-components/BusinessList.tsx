@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Business } from '../models/business';
-import { Grid, CircularProgress, makeStyles, Theme, Popover } from '@material-ui/core';
+import { Grid, CircularProgress, makeStyles, Theme } from '@material-ui/core';
+import BusinessCard from './BusinessCard';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -58,14 +59,18 @@ const BusinessList = (props: Props) => {
   } else {
     return(
       <Grid
-      container
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      className={classes.root}
+        item
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        className={classes.root}
     >
-      {businesses.map(business => (
-        <p key={business.id}>{business.name}</p>
+      {businesses.map((business, index) => (
+        <Grid key={index} item style={{width:"70%", paddingTop: "20px"}}>
+          <BusinessCard key={business.id} business={business} index={index + 1}/>
+        </Grid>
       ))}
     </Grid>
     )

@@ -60,7 +60,7 @@ type Props = {
 const SearchBar = (props: Props) => {
   const classes = useStyles();
 
-  const handlePermission = () => {
+  const handleLocationPermission = () => {
     props.setLoading(true);
     navigator.geolocation.getCurrentPosition((position) => {
       let currentLocation = [position.coords.latitude, position.coords.longitude]
@@ -87,7 +87,7 @@ const SearchBar = (props: Props) => {
           </div>
           <div
             className={classes.toolbar}
-            onClick={handlePermission}
+            onClick={handleLocationPermission}
           >
             <div className={classes.icon}>
               <LocationOnOutlinedIcon />
