@@ -1,14 +1,42 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Business } from '../models/business';
-import { Grid } from '@material-ui/core';
+import { Grid, CircularProgress, makeStyles, Theme, Popover } from '@material-ui/core';
 
-const BusinessList = () => {
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    flexGrow: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // height: "100%",
+  },
+  icon: {
+    // verticalAlign: "middle",
+    // justifyContent: "center",
+    // alignItems: "center",
+    height: "100%"
+  }
+}))
+
+type Props = {
+  location: number[],
+  loading: boolean,
+  setLoading: (loading: boolean) => void
+}
+
+const BusinessList = (props: Props) => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
 
+  const classes = useStyles();
+
   useEffect(() => {
-    getBusinesses('29.7534056825545','-95.37598660914549');
-  }, [])
+    if (props.location.length) {
+      getBusinesses(props.location[0].toString(),props.location[1].toString());
+    } else {
+      getBusinesses('37.79118339155342', '-122.40330988014378');// Twitch SF office location
+    }
+    props.setLoading(false);
+  }, [props.location]);
 
   const getBusinesses = (latitude: string, longitude: string): void => {
     axios
@@ -17,23 +45,31 @@ const BusinessList = () => {
       .then(result => { setBusinesses(result) })
       .catch(err => { console.log(err) })
   }
-  if (businesses.length) {
+
+  if (!businesses.length || props.loading) {
     return (
       <Grid
         container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
+        className={classes.root}
       >
-        {businesses.map(business => (
-          <p>{business.name}</p>
-        ))}
+        <CircularProgress color="secondary" />
       </Grid>
-    );
+    )
   } else {
-    return null;
+    return(
+      <Grid
+      container
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      className={classes.root}
+    >
+      {businesses.map(business => (
+        <p key={business.id}>{business.name}</p>
+      ))}
+    </Grid>
+    )
   }
-
 }
 
 export default BusinessList;

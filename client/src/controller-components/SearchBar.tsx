@@ -52,14 +52,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const SearchBar = () => {
+type Props = {
+  setLocation: (location: number[]) => void,
+  setLoading: (loading: boolean) => void
+}
+
+const SearchBar = (props: Props) => {
   const classes = useStyles();
-  const [location, setLocation] = useState<number[]>([]);
 
   const handlePermission = () => {
+    props.setLoading(true);
     navigator.geolocation.getCurrentPosition((position) => {
       let currentLocation = [position.coords.latitude, position.coords.longitude]
-      setLocation(currentLocation);
+      props.setLocation(currentLocation);
     })
   }
 

@@ -20,7 +20,12 @@ const useStyles = makeStyles((/* theme */) => ({
   }
 }));
 
-const Header = () => {
+type Props = {
+  setLocation: (location: number[]) => void,
+  setLoading: (loading: boolean) => void
+}
+
+const Header = (props: Props) => {
   const classes = useStyles();
 
   return(
@@ -33,7 +38,10 @@ const Header = () => {
     >
       <h1 className={classes.heading}>BizBuzz</h1>
       <h4 className={classes.subheading}>Find the <em>buzz</em> about your local <em>biz</em>.</h4>
-      <SearchBar />
+      <SearchBar
+        setLocation={props.setLocation}
+        setLoading={props.setLoading}
+      />
     </Grid>
   )
 }
