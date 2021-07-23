@@ -2,7 +2,11 @@ import cors from 'cors';
 import logger from 'morgan';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { getBusinesses } from './controllers/yelp';
+import {
+  getBusinesses,
+  getBusinessInfo,
+  getBusinessReviews
+} from './controllers/yelp';
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -14,12 +18,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get(`/search/:latitude/:longitude`, (req: express.Request, res: express.Response) => {
-  getBusinesses(req.query.latitude as string, req.query.longitude as string)
+  getBusinesses(req.params.latitude, req.params.longitude)
     .then(response => {
       res.status(200).send(response);
     })
     .catch((err) => {
       res.status(500).send(`Error retrieving list of businesses: ${err}`);
+    })
+})
+
+app.get(`/business/:id`, (req: express.Request, res: express.Response) => {
+  getBusinessInfo(req.params.id)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(`Error retrieving specific business info: ${err}`)
+    })
+})
+
+app.get(`/business/:id/reviews`, (req: express.Request, res: express.Response) => {
+  getBusinessReviews(req.params.id)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(`Error retrieving business reviews: ${err}`)
     })
 })
 
