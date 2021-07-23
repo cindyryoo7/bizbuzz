@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Business } from '../models/business';
 import { Grid, CircularProgress, makeStyles, Theme } from '@material-ui/core';
 import BusinessCard from './BusinessCard';
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -23,12 +24,14 @@ type Props = {
   location: number[] | string,
   loading: boolean,
   setLoading: (loading: boolean) => void
+  // setId: (id: string) => void
 }
 
 const BusinessList = (props: Props) => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
 
   const classes = useStyles();
+  let history = useHistory();
 
   useEffect(() => {
     if (props.location.length) {
@@ -59,6 +62,11 @@ const BusinessList = (props: Props) => {
       .catch(err => { console.log(err) })
   }
 
+  const handleNavigate = (id:string) => {
+    // props.setId(id);
+    history.push(`/business/${id}`);
+  }
+
   if (!businesses.length || props.loading) {
     return (
       <Grid
@@ -80,7 +88,7 @@ const BusinessList = (props: Props) => {
         className={classes.root}
     >
       {businesses.map((business, index) => (
-        <Grid key={index} item style={{width:"70%", paddingTop: "20px"}}>
+        <Grid key={index} item style={{width:"70%", paddingTop: "20px"}} onClick={() => {handleNavigate(business.id)}}>
           <BusinessCard key={business.id} business={business} index={index + 1}/>
         </Grid>
       ))}

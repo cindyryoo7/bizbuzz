@@ -50,7 +50,7 @@ const CardBody = (props: Props) => {
           {props.business.display_phone}
         </Typography>
         <Typography noWrap>
-          Price: {props.business.price}
+          Price: {props.business.price ? props.business.price : "Unknown"}
         </Typography>
       </Grid>
     </Grid>
