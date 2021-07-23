@@ -1,33 +1,23 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import axios from 'axios';
+import { createTheme, ThemeProvider } from '@material-ui/core';
+import AppGrid from './view-components/AppGrid';
 
-function App() {
-  const [businesses, setBusinesses] = useState<any []>([]);
-
-  useEffect(() => {
-    getBusinesses('29.7534056825545','-95.37598660914549');
-  }, [])
-
-  const getBusinesses = (latitude: string, longitude: string): void => {
-    axios
-      .get(`/search/${latitude}/${longitude}`)
-      .then(result => result.data)
-      .then(result => { setBusinesses(result) })
-      .catch(err => { console.log(err) })
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#fbe8a6'
+    },
+    secondary: {
+      main: '#303C6C'
+    }
   }
-  if (businesses.length) {
-    return (
-      <div className="App">
-        {businesses.map(business => (
-          <p>{business.name}</p>
-        ))}
-      </div>
-    );
-  } else {
-    return null;
-  }
+})
 
-}
+const App = () =>
+  <ThemeProvider theme={theme}>
+    <AppGrid />
+  </ThemeProvider>
 
 export default App;
+
