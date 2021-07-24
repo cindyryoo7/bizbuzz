@@ -4,6 +4,7 @@ import Header from '../view-components/Header';
 import BusinessList from './BusinessList';
 import BusinessPage from './BusinessPage';
 import { Coordinates } from '../models/coordinates';
+import Homepage from './Homepage';
 
 const Routes = () => {
   const [currentLocationCoords, setCurrentLocationCoords] = useState<Coordinates>({
@@ -18,7 +19,7 @@ const Routes = () => {
       <Header setLoading={setLoading}/>
       <Switch>
         <Route exact path='/'>
-          <BusinessList
+          <Homepage
             loading={loading}
             currentLocationCoords={currentLocationCoords}
             currentLocationPhysical={currentLocationPhysical}
@@ -28,7 +29,7 @@ const Routes = () => {
           />
         </Route>
         <Route path='/business/:id'>
-          <BusinessPage/>
+          <BusinessPage setLoading={setLoading}/>
         </Route>
       </Switch>
     </Router>

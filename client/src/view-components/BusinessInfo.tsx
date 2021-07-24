@@ -6,7 +6,8 @@ import { Coordinates } from '../models/coordinates';
 import { useState, useEffect } from 'react';
 
 type Props = {
-  details: Details
+  details: Details,
+  setLoading: (loading: boolean) => void
 }
 
 const BusinessInfo = (props: Props) => {
@@ -46,7 +47,7 @@ const BusinessInfo = (props: Props) => {
       <Grid>
         <Typography>Location:</Typography>
 
-        <GoogleMap markers={[coordinates]} dimensions={{
+        <GoogleMap setIsMapLoaded={props.setLoading} markers={[coordinates]} dimensions={{
           width: "400px",
           height: "400px"
         }}/>

@@ -8,7 +8,7 @@ import BusinessDetails from './BusinessDetails';
 import { useHistory } from "react-router-dom";
 
 type Props = {
-
+  setLoading: (loading: boolean) => void
 }
 
 const BusinessPage = (props: Props) => {
@@ -63,7 +63,7 @@ const BusinessPage = (props: Props) => {
       >
         <PhotoGallery photos={businessDetails.photos} />
       </Grid>
-      <BusinessDetails reviews={businessReviews} details={businessDetails}/>
+      <BusinessDetails reviews={businessReviews} details={businessDetails} setLoading={props.setLoading}/>
     </Grid>
   );
 

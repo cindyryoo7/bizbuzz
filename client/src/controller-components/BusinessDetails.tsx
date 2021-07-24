@@ -6,7 +6,8 @@ import BusinessInfo from '../view-components/BusinessInfo';
 
 type Props = {
   reviews: Review[],
-  details: Details
+  details: Details,
+  setLoading: (loading: boolean) => void
 }
 
 const BusinessDetails = (props: Props) => {
@@ -24,7 +25,7 @@ const BusinessDetails = (props: Props) => {
         alignItems="flex-start"
         wrap='nowrap'
       >
-        <BusinessInfo details={props.details}/>
+        <BusinessInfo details={props.details} setLoading={props.setLoading}/>
         <ReviewsList reviews={props.reviews}/>
       </Grid>
     </Grid>

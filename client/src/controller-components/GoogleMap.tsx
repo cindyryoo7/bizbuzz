@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 import { GoogleMap as Map, useJsApiLoader, Marker, LoadScript } from '@react-google-maps/api';
 import { Coordinates } from '../models/coordinates';
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 type Props = {
   markers: Coordinates[],
   dimensions: {width: string, height: string}
+  setIsMapLoaded: (isMapLoaded: boolean) => void
 }
 
 const GoogleMap = (props: Props) => {
@@ -36,33 +37,72 @@ const GoogleMap = (props: Props) => {
     const bounds = new window.google.maps.LatLngBounds();
     map.fitBounds(bounds);
     setMap(map);
-  }, [])
+  }, []);
 
   const onUnmount = React.useCallback(() => {
     setMap(null);
-  }, [])
+  }, []);
 
-  useEffect(() => {
+  const setCenterAndMarkers = () => {
     if (props.markers.length && props.markers[0].latitude && window.google) {
+      console.log('first conditional')
       const currentLatLng = new window.google.maps.LatLng(parseFloat(props.markers[0].latitude.toString()), parseFloat(props.markers[0].longitude.toString()));
       setCenter(currentLatLng);
       if (props.markers.length > 1) {
+        console.log('second conditional')
         const locationMarkers = props.markers.map(marker => (
           new window.google.maps.LatLng(parseFloat(marker.latitude.toString()), parseFloat(marker.longitude.toString()))
         ))
         setGoogleCoords(locationMarkers);
       }
     }
+  }
+
+  // const setCenterAndMarkers = useCallback(async () => {
+  //   console.log('props.markers.length', props.markers.length)
+  //   console.log('props.markers[0].latitude', props.markers[0].latitude)
+  //   console.log('window.google', window.google)
+  //   if (props.markers.length && props.markers[0].latitude && window.google) {
+  //     console.log('first conditional')
+  //     const currentLatLng = new window.google.maps.LatLng(parseFloat(props.markers[0].latitude.toString()), parseFloat(props.markers[0].longitude.toString()));
+  //     await setCenter(currentLatLng);
+  //     if (props.markers.length > 1) {
+  //       console.log('second conditional')
+  //       const locationMarkers = props.markers.map(marker => (
+  //         new window.google.maps.LatLng(parseFloat(marker.latitude.toString()), parseFloat(marker.longitude.toString()))
+  //       ))
+  //       await setGoogleCoords(locationMarkers);
+  //     }
+  //   }
+  // }, [props.markers])
+
+  // useEffect(() => {
+  //   setCenterAndMarkers()
+  // }, [setCenterAndMarkers])
+
+  useEffect(() => {
+    setCenterAndMarkers();
   }, [props.markers])
 
-  // useEffect(() => {
-  //   console.log('googlemap component has loaded');
-  //   console.log('center on mount', center)
-  // }, [])
+  useEffect(() => {
+    setCenterAndMarkers();
+  }, [])
 
-  // useEffect(() => {
-  //   console.log('center useeffect', center)
-  // }, [center])
+  useEffect(() => {
+    console.log('googlemap component has loaded');
+  }, [])
+
+  useEffect(() => {
+    console.log('center', center)
+    console.log('googleCoords', googleCoords)
+  }, [center, googleCoords])
+
+  useEffect(() => {
+    if (isLoaded) {
+      props.setIsMapLoaded(true);
+    }
+    setCenterAndMarkers()
+  }, [isLoaded])
 
   return isLoaded ?
     <Map
