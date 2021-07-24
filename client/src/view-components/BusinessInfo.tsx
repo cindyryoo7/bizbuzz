@@ -2,12 +2,22 @@ import { Grid, Typography, Chip } from '@material-ui/core';
 import { BusinessDetails as Details } from '../models/businessDetails';
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import GoogleMap from '../controller-components/GoogleMap';
+import { Coordinates } from '../models/coordinates';
+import { useState, useEffect } from 'react';
 
 type Props = {
   details: Details
 }
 
 const BusinessInfo = (props: Props) => {
+  const [coordinates, setCoordinates] = useState<Coordinates>({} as Coordinates);
+
+  useEffect(() => {
+    if (props.details.name) {
+      setCoordinates(props.details.coordinates);
+    }
+  }, [props.details])
+
 
   return (
     <Grid
@@ -35,10 +45,13 @@ const BusinessInfo = (props: Props) => {
       </Grid>
       <Grid>
         <Typography>Location:</Typography>
-        <GoogleMap location={props.details.coordinates} locations={null} dimensions={{
+
+        <GoogleMap markers={[coordinates]} dimensions={{
           width: "400px",
           height: "400px"
         }}/>
+
+
         {props.details.location
           ? props.details.location.display_address.map((address, index) => (
               <Typography key={index}>{address}</Typography>

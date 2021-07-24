@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type Props = {
-  setLocation: (location: Coordinates | string) => void,
   setLoading: (loading: boolean) => void,
-  setCurrentLocation: (currentLocation: string) => void
+  setCurrentLocationCoords: (currentLocationCoords: Coordinates) => void,
+  setCurrentLocationPhysical: (currentLocationPhysical: string) => void
 }
 
 const NavBar = (props: Props) => {
@@ -58,13 +58,13 @@ const NavBar = (props: Props) => {
 
   const handleSubmit = () => {
     props.setLoading(true);
-    handleSearchLocation(`for ${value}`);
-    props.setCurrentLocation(value);
+    // handleSearchLocation(`for ${value}`);
+    props.setCurrentLocationPhysical(`for ${value}`);
   }
 
-  const handleSearchLocation = (location: string): void => {
-    props.setLocation(location);
-  }
+  // const handleSearchLocation = (location: string): void => {
+  //   props.setCurrentLocationPhysical(location);
+  // }
 
   const handleLocationPermission = () => {
     props.setLoading(true);
@@ -73,8 +73,8 @@ const NavBar = (props: Props) => {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       }
-      props.setLocation(currentLocation);
-      props.setCurrentLocation("near you");
+      props.setCurrentLocationCoords(currentLocation);
+      props.setCurrentLocationPhysical("near you");
     })
   }
 

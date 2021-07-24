@@ -33,39 +33,52 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 type Props = {
-  location: Coordinates | string,
   loading: boolean,
+  currentLocationCoords: Coordinates,
+  currentLocationPhysical: string,
   setLoading: (loading: boolean) => void,
-  setLocation: (location: Coordinates | string) => void,
+  setCurrentLocationCoords: (currentLocationCoords: Coordinates) => void,
+  setCurrentLocationPhysical: (currentLocationPhysical: string) => void
 }
 
 const BusinessList = (props: Props) => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
-  const [currentLocation, setCurrentLocation] = useState<string>("for San Francisco, CA")
-  const [defaultLocation, setDefaultLocation] = useState<Coordinates>({
-    latitude: 37.79118339155342,
-    longitude: -122.40330988014378
-  }); // Twitch SF office location
+  const [markers, setMarkers] = useState<Coordinates[]>([]);
+  // const [currentLocation, setCurrentLocation] = useState<string>("for San Francisco, CA")
+  // const [defaultLocation, setDefaultLocation] = useState<Coordinates>({
+  //   latitude: 37.79118339155342,
+  //   longitude: -122.40330988014378
+  // }); // Twitch SF office location
 
   const classes = useStyles();
   let history = useHistory();
 
+  // invokes GET requests to Yelp API if location coordinates change
   useEffect(() => {
-    if (typeof props.location === 'string') {
-      getBusinessesByLocation(props.location)
-      setCurrentLocation(props.location)
-    } else if (props.location.latitude){
-      getBusinessesByLatLong(props.location.latitude.toString(), props.location.longitude.toString());
-      setDefaultLocation({
-        latitude: props.location.latitude,
-        longitude: props.location.longitude
-      });
-    } else {
-      getBusinessesByLatLong(defaultLocation.latitude.toString(), defaultLocation.longitude.toString());
-    }
-    props.setLoading(false);
-  }, [props.location]);
+    // if (props.currentLocationCoords) {
+      getBusinessesByLatLong(props.currentLocationCoords.latitude.toString(), props.currentLocationCoords.longitude.toString());
+      props.setLoading(false);
+    // }
+  }, [props.currentLocationCoords]);
 
+  // invokes GET requests to Yelp API if location coordinates change
+  useEffect(() => {
+    getBusinessesByLocation(props.currentLocationPhysical)
+    props.setLoading(false);
+  }, [props.currentLocationPhysical]);
+
+
+  // pulls coordinates of all businesses returned from Yelp API
+  useEffect(() => {
+    if (businesses.length) {
+      const allCoordinates = businesses.map(business => (
+        business.coordinates
+      ));
+      setMarkers([props.currentLocationCoords].concat(allCoordinates));
+    }
+  }, [businesses])
+
+  // GET request to Yelp API by location in string format
   const getBusinessesByLocation = (location: string): void => {
     axios
       .get(`/search/${location}`)
@@ -77,6 +90,7 @@ const BusinessList = (props: Props) => {
       })
   }
 
+  // GET request to Yelp API by location coordinates
   const getBusinessesByLatLong = (latitude: string, longitude: string): void => {
     axios
       .get(`/search/${latitude}/${longitude}`)
@@ -85,10 +99,12 @@ const BusinessList = (props: Props) => {
       .catch(err => { console.log(err) })
   }
 
+  // reroutes user to specific business page with details and reviews
   const handleNavigate = (id:string) => {
     history.push(`/business/${id}`);
   }
 
+  // conditionally render once a list of businesses has been returned by Yelp API
   if (!businesses.length || props.loading) {
     return (
       <Grid
@@ -116,12 +132,12 @@ const BusinessList = (props: Props) => {
           className={classes.root}
         >
           <SearchBar
-            setLocation={props.setLocation}
             setLoading={props.setLoading}
-            setCurrentLocation={setCurrentLocation}
+            setCurrentLocationCoords={props.setCurrentLocationCoords}
+            setCurrentLocationPhysical={props.setCurrentLocationPhysical}
           />
           <Typography className={classes.resultsText}>
-            Showing results {currentLocation}
+            Showing results {props.currentLocationPhysical}
           </Typography>
           <Grid
             container
@@ -151,10 +167,17 @@ const BusinessList = (props: Props) => {
               item
               className={classes.right}
             >
-              <GoogleMap locations={businesses} location={defaultLocation} dimensions={{
-                width: "100%",
-                height: "700px"
-              }}/>
+
+              {businesses.length && markers.length
+                ? <GoogleMap markers={markers} dimensions={{
+                    width: "100%",
+                    height: "700px"
+                  }}/>
+                : null
+              }
+
+
+
             </Grid>
           </Grid>
         </Grid>

@@ -6,7 +6,11 @@ import BusinessPage from './BusinessPage';
 import { Coordinates } from '../models/coordinates';
 
 const Routes = () => {
-  const [location, setLocation] = useState<Coordinates | string>({} as Coordinates);
+  const [currentLocationCoords, setCurrentLocationCoords] = useState<Coordinates>({
+    latitude: 37.79118339155342,
+    longitude: -122.40330988014378
+  }); //Twitch SF Office Location
+  const [currentLocationPhysical, setCurrentLocationPhysical] = useState<string>("for San Francisco, CA");
   const [loading, setLoading] = useState<boolean>(true);
 
   return(
@@ -14,7 +18,14 @@ const Routes = () => {
       <Header setLoading={setLoading}/>
       <Switch>
         <Route exact path='/'>
-          <BusinessList location={location} loading={loading} setLoading={setLoading} setLocation={setLocation}/>
+          <BusinessList
+            loading={loading}
+            currentLocationCoords={currentLocationCoords}
+            currentLocationPhysical={currentLocationPhysical}
+            setLoading={setLoading}
+            setCurrentLocationCoords={setCurrentLocationCoords}
+            setCurrentLocationPhysical={setCurrentLocationPhysical}
+          />
         </Route>
         <Route path='/business/:id'>
           <BusinessPage/>
