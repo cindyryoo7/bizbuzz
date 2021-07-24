@@ -3,9 +3,10 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import Header from '../view-components/Header';
 import BusinessList from './BusinessList';
 import BusinessPage from './BusinessPage';
+import { Coordinates } from '../models/coordinates';
 
 const Routes = () => {
-  const [location, setLocation] = useState<number[] | string>([]);
+  const [location, setLocation] = useState<Coordinates | string>({} as Coordinates);
   const [loading, setLoading] = useState<boolean>(true);
 
   return(

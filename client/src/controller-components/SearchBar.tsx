@@ -2,6 +2,7 @@ import {  useState } from 'react';
 import { AppBar, Toolbar, makeStyles, Theme, alpha, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import { Coordinates } from '../models/coordinates';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type Props = {
-  setLocation: (location: number[] | string) => void,
+  setLocation: (location: Coordinates | string) => void,
   setLoading: (loading: boolean) => void,
   setCurrentLocation: (currentLocation: string) => void
 }
@@ -74,7 +75,10 @@ const SearchBar = (props: Props) => {
   const handleLocationPermission = () => {
     props.setLoading(true);
     navigator.geolocation.getCurrentPosition((position) => {
-      let currentLocation = [position.coords.latitude, position.coords.longitude]
+      let currentLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      }
       props.setLocation(currentLocation);
       props.setCurrentLocation("near you");
     })

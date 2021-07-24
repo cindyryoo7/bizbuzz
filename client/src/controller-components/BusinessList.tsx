@@ -5,6 +5,8 @@ import { Grid, CircularProgress, makeStyles, Theme, Typography } from '@material
 import BusinessCard from './BusinessCard';
 import { useHistory } from "react-router-dom";
 import SearchBar from '../controller-components/SearchBar';
+import GoogleMap from './GoogleMap';
+import { Coordinates } from '../models/coordinates';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -22,29 +24,35 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 type Props = {
-  location: number[] | string,
+  location: Coordinates | string,
   loading: boolean,
   setLoading: (loading: boolean) => void,
-  setLocation: (location: number[] | string) => void,
+  setLocation: (location: Coordinates | string) => void,
 }
 
 const BusinessList = (props: Props) => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [currentLocation, setCurrentLocation] = useState<string>("for San Francisco, CA")
+  const [defaultLocation, setDefaultLocation] = useState<Coordinates>({
+    latitude: 37.79118339155342,
+    longitude: -122.40330988014378
+  }); // Twitch SF office location
 
   const classes = useStyles();
   let history = useHistory();
 
   useEffect(() => {
-    if (props.location.length) {
-      if (typeof props.location === 'string') {
-        getBusinessesByLocation(props.location)
-        setCurrentLocation(props.location)
-      } else {
-        getBusinessesByLatLong(props.location[0].toString(),props.location[1].toString());
-      }
+    if (typeof props.location === 'string') {
+      getBusinessesByLocation(props.location)
+      setCurrentLocation(props.location)
+    } else if (props.location.latitude){
+      getBusinessesByLatLong(props.location.latitude.toString(), props.location.longitude.toString());
+      setDefaultLocation({
+        latitude: props.location.latitude,
+        longitude: props.location.longitude
+      });
     } else {
-      getBusinessesByLatLong('37.79118339155342', '-122.40330988014378');// Twitch SF office location
+      getBusinessesByLatLong(defaultLocation.latitude.toString(), defaultLocation.longitude.toString());
     }
     props.setLoading(false);
   }, [props.location]);
@@ -83,27 +91,32 @@ const BusinessList = (props: Props) => {
     )
   } else {
     return(
-      <Grid
-        item
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        spacing={2}
-        className={classes.root}
-      >
-        <SearchBar
-          setLocation={props.setLocation}
-          setLoading={props.setLoading}
-          setCurrentLocation={setCurrentLocation}
-        />
-        <Typography>Showing results {currentLocation}</Typography>
-        {businesses.map((business, index) => (
-          <Grid key={index} item style={{width:"70%", paddingTop: "20px"}} onClick={() => {handleNavigate(business.id)}}>
-            <BusinessCard key={business.id} business={business} index={index + 1}/>
-          </Grid>
-        ))}
-    </Grid>
+      <Grid container direction="row" justifyContent="center" alignItems="flex-start" wrap="nowrap">
+        <Grid
+          item
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+          className={classes.root}
+        >
+          <SearchBar
+            setLocation={props.setLocation}
+            setLoading={props.setLoading}
+            setCurrentLocation={setCurrentLocation}
+          />
+          <Typography>Showing results {currentLocation}</Typography>
+          {businesses.map((business, index) => (
+            <Grid key={index} item style={{width:"70%", paddingTop: "20px"}} onClick={() => {handleNavigate(business.id)}}>
+              <BusinessCard key={business.id} business={business} index={index + 1}/>
+            </Grid>
+          ))}
+        </Grid>
+        <Grid>
+          <GoogleMap locations={businesses} location={defaultLocation}/>
+        </Grid>
+      </Grid>
     )
   }
 }
