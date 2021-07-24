@@ -40,13 +40,10 @@ const Homepage = (props: Props) => {
   const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
 
   const classes = useStyles();
-  let history = useHistory();
 
   // invokes GET requests to Yelp API if location coordinates change
   useEffect(() => {
-    // if (props.currentLocationCoords) {
-      getBusinessesByLatLong(props.currentLocationCoords.latitude.toString(), props.currentLocationCoords.longitude.toString());
-    // }
+    getBusinessesByLatLong(props.currentLocationCoords.latitude.toString(), props.currentLocationCoords.longitude.toString());
   }, [props.currentLocationCoords]);
 
   // invokes GET requests to Yelp API if location coordinates change
@@ -136,12 +133,10 @@ const Homepage = (props: Props) => {
             wrap="nowrap"
           >
             <BusinessList businesses={businesses} setIsListLoaded={setIsListLoaded}/>
-
             <Grid
               item
               className={classes.right}
             >
-
               {businesses.length && markers.length
                 ? <GoogleMap setIsMapLoaded={setIsMapLoaded} markers={markers} dimensions={{
                     width: "100%",
@@ -149,9 +144,6 @@ const Homepage = (props: Props) => {
                   }}/>
                 : null
               }
-
-
-
             </Grid>
           </Grid>
         </Grid>
