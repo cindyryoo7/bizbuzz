@@ -7,14 +7,13 @@ import BusinessPage from './BusinessPage';
 const Routes = () => {
   const [location, setLocation] = useState<number[] | string>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [id, setId] = useState<string>("");
 
   return(
     <Router>
-      <Header setLocation={setLocation} setLoading={setLoading}/>
+      <Header setLoading={setLoading}/>
       <Switch>
         <Route exact path='/'>
-          <BusinessList location={location} loading={loading} setLoading={setLoading} />
+          <BusinessList location={location} loading={loading} setLoading={setLoading} setLocation={setLocation}/>
         </Route>
         <Route path='/business/:id'>
           <BusinessPage/>

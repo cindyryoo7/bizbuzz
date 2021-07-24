@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Review as ReviewType } from '../models/review';
 import Review from './Review';
 
@@ -19,6 +17,7 @@ const ReviewsList = (props: Props) => {
         alignItems="center"
         style={{width: "100%"}}
       >
+        <Typography>Reviews:</Typography>
         {props.reviews.map(review => (
           <Review key={review.id} review={review}/>
         ))}

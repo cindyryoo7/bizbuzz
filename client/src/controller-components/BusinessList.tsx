@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Business } from '../models/business';
-import { Grid, CircularProgress, makeStyles, Theme } from '@material-ui/core';
+import { Grid, CircularProgress, makeStyles, Theme, Typography } from '@material-ui/core';
 import BusinessCard from './BusinessCard';
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import SearchBar from '../controller-components/SearchBar';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -23,12 +24,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 type Props = {
   location: number[] | string,
   loading: boolean,
-  setLoading: (loading: boolean) => void
-  // setId: (id: string) => void
+  setLoading: (loading: boolean) => void,
+  setLocation: (location: number[] | string) => void,
 }
 
 const BusinessList = (props: Props) => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
+  const [currentLocation, setCurrentLocation] = useState<string>("for San Francisco, CA")
 
   const classes = useStyles();
   let history = useHistory();
@@ -37,6 +39,7 @@ const BusinessList = (props: Props) => {
     if (props.location.length) {
       if (typeof props.location === 'string') {
         getBusinessesByLocation(props.location)
+        setCurrentLocation(props.location)
       } else {
         getBusinessesByLatLong(props.location[0].toString(),props.location[1].toString());
       }
@@ -51,7 +54,10 @@ const BusinessList = (props: Props) => {
       .get(`/search/${location}`)
       .then(result => result.data)
       .then(result => { setBusinesses(result) })
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        console.log(err);
+        alert("Could not execute search, try specifying a more exact location.");
+      })
   }
 
   const getBusinessesByLatLong = (latitude: string, longitude: string): void => {
@@ -63,7 +69,6 @@ const BusinessList = (props: Props) => {
   }
 
   const handleNavigate = (id:string) => {
-    // props.setId(id);
     history.push(`/business/${id}`);
   }
 
@@ -86,12 +91,18 @@ const BusinessList = (props: Props) => {
         alignItems="center"
         spacing={2}
         className={classes.root}
-    >
-      {businesses.map((business, index) => (
-        <Grid key={index} item style={{width:"70%", paddingTop: "20px"}} onClick={() => {handleNavigate(business.id)}}>
-          <BusinessCard key={business.id} business={business} index={index + 1}/>
-        </Grid>
-      ))}
+      >
+        <SearchBar
+          setLocation={props.setLocation}
+          setLoading={props.setLoading}
+          setCurrentLocation={setCurrentLocation}
+        />
+        <Typography>Showing results {currentLocation}</Typography>
+        {businesses.map((business, index) => (
+          <Grid key={index} item style={{width:"70%", paddingTop: "20px"}} onClick={() => {handleNavigate(business.id)}}>
+            <BusinessCard key={business.id} business={business} index={index + 1}/>
+          </Grid>
+        ))}
     </Grid>
     )
   }

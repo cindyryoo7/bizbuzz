@@ -1,7 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import { makeStyles, Theme, Card, CardActionArea, CardContent, Typography, Grid, Chip } from '@material-ui/core';
-import DoneIcon from '@material-ui/icons/Done';
+import { makeStyles, Theme, Typography, Grid } from '@material-ui/core';
 import { Business } from '../models/business';
 
 const useStyles = makeStyles((theme: Theme) => ({

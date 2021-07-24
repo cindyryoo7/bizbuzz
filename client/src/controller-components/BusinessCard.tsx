@@ -1,19 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import { makeStyles, Theme, Card, CardActionArea, Typography, Grid, Box, Chip } from '@material-ui/core';
-import DoneIcon from '@material-ui/icons/Done';
+import { makeStyles, Theme, Card, CardActionArea, Grid } from '@material-ui/core';
 import { Business } from '../models/business';
 import CardHeader from '../view-components/CardHeader';
 import CardBody from '../view-components/CardBody';
 import CardFooter from '../view-components/CardFooter';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    minWidth: 345,
-    maxWidth: 800,
-    color: "blue",
-    height: "100%"
-  }
 }))
 
 type Props = {

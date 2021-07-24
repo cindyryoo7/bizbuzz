@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import SearchBar from '../controller-components/SearchBar';
 
 const useStyles = makeStyles((/* theme */) => ({
   root: {
@@ -21,7 +20,6 @@ const useStyles = makeStyles((/* theme */) => ({
 }));
 
 type Props = {
-  setLocation: (location: number[] | string) => void,
   setLoading: (loading: boolean) => void
 }
 
@@ -38,10 +36,7 @@ const Header = (props: Props) => {
     >
       <h1 className={classes.heading}>BizBuzz</h1>
       <h4 className={classes.subheading}>Find the <em>buzz</em> about your local <em>biz</em>.</h4>
-      <SearchBar
-        setLocation={props.setLocation}
-        setLoading={props.setLoading}
-      />
+
     </Grid>
   )
 }

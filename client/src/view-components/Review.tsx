@@ -1,5 +1,3 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import { Grid, Card, CardActionArea, Typography, CardHeader, Avatar, makeStyles, Link } from '@material-ui/core';
 import { Review as ReviewType } from '../models/review';
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';

@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import { makeStyles, Theme, Card, CardActionArea, CardContent, Typography, Grid, Chip } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 import { GoogleMap as Map, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { Coordinates } from '../models/coordinates';
 import { GOOGLE_API_KEY } from "../.env";
@@ -40,7 +39,7 @@ const GoogleMap = (props: Props) => {
     setMap(map);
   }, [])
 
-  const onUnmount = React.useCallback((map) => {
+  const onUnmount = React.useCallback(() => {
     setMap(null);
   }, [])
 

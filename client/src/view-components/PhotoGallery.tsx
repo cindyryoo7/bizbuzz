@@ -1,7 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import { Grid, ImageList, ImageListItem, makeStyles, Theme } from '@material-ui/core';
-
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

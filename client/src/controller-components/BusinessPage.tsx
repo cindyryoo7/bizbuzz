@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Business } from '../models/business';
-import { Grid } from '@material-ui/core';
+import { Grid, Link } from '@material-ui/core';
 import { BusinessDetails as Details } from '../models/businessDetails';
 import { Review } from '../models/review';
 import PhotoGallery from '../view-components/PhotoGallery';
 import BusinessDetails from './BusinessDetails';
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 type Props = {
 
@@ -17,6 +16,10 @@ const BusinessPage = (props: Props) => {
   const [businessDetails, setBusinessDetails] = useState<Details>({} as Details);
   const [businessReviews, setBusinessReviews] = useState<Review[]>([]);
   const history = useHistory();
+
+  const handleBack = () => {
+    history.goBack();
+  }
 
   const getBusinessDetails = (id: string) => {
     axios
@@ -52,14 +55,15 @@ const BusinessPage = (props: Props) => {
       justifyContent="center"
       alignItems="center"
     >
+      <Grid container direction="row" alignItems="flex-start">
+        <Link onClick={handleBack} color="secondary">{"< Back to Results"}</Link>
+      </Grid>
       <Grid
         style={{width: "100%"}}
       >
         <PhotoGallery photos={businessDetails.photos} />
       </Grid>
-      <Grid>
-        <BusinessDetails reviews={businessReviews} details={businessDetails}/>
-      </Grid>
+      <BusinessDetails reviews={businessReviews} details={businessDetails}/>
     </Grid>
   );
 

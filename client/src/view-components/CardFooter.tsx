@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import { makeStyles, Theme, Card, CardActionArea, CardContent, Typography, Grid, Chip } from '@material-ui/core';
+import { makeStyles, Theme, Typography, Grid, Chip } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import { Business } from '../models/business';
 

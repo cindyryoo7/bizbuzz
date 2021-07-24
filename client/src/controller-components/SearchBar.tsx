@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { AppBar, Toolbar, InputBase, makeStyles, Theme, alpha, Typography, Input, TextField } from '@material-ui/core';
+import {  useState } from 'react';
+import { AppBar, Toolbar, makeStyles, Theme, alpha, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 
@@ -54,7 +53,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type Props = {
   setLocation: (location: number[] | string) => void,
-  setLoading: (loading: boolean) => void
+  setLoading: (loading: boolean) => void,
+  setCurrentLocation: (currentLocation: string) => void
 }
 
 const SearchBar = (props: Props) => {
@@ -63,7 +63,8 @@ const SearchBar = (props: Props) => {
 
   const handleSubmit = () => {
     props.setLoading(true);
-    handleSearchLocation(value);
+    handleSearchLocation(`for ${value}`);
+    props.setCurrentLocation(value);
   }
 
   const handleSearchLocation = (location: string): void => {
@@ -75,28 +76,9 @@ const SearchBar = (props: Props) => {
     navigator.geolocation.getCurrentPosition((position) => {
       let currentLocation = [position.coords.latitude, position.coords.longitude]
       props.setLocation(currentLocation);
+      props.setCurrentLocation("near you");
     })
   }
-
-  // const handleKeyDown = (e: any) => {
-  //   switch(e.key) {
-  //     case 'Enter':
-  //       handleSearchLocation(value);
-  //       break;
-  //     case 'Backspace':
-  //       setValue(value.substring(0, value.length - 1))
-  //       break;
-  //     case 'Delete':
-  //       setValue("")
-  //       break;
-  //     case 'Escape':
-  //       break;
-  //     default:
-  //       if (e.key.length === 1) {
-  //         setValue(value.concat(e.key))
-  //       }
-  //   }
-  // }
 
   const handleChange = (e: any) => {
     setValue(e.target.value);
@@ -107,9 +89,6 @@ const SearchBar = (props: Props) => {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <div className={classes.toolbar}>
-            {/* <div className={classes.icon}>
-              <SearchIcon />
-            </div> */}
             <form onSubmit={() => {handleSubmit()}}>
               <label>
                 <input type="text" placeholder="Search by location..." onChange={(e) => {handleChange(e)}}></input>
@@ -117,7 +96,6 @@ const SearchBar = (props: Props) => {
               <button className={classes.icon}>
                 <SearchIcon />
               </button>
-              {/* <input type="submit" value="Submit"></input> */}
             </form>
           </div>
           <div
@@ -141,11 +119,3 @@ const SearchBar = (props: Props) => {
 }
 
 export default SearchBar;
-
-{/* <TextField
-type="search"
-placeholder="Search based on your location..."
-className={classes.text}
-value={value}
-onKeyDown={(e) => {handleKeyDown(e)}}
-/> */}
