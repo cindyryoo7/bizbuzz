@@ -11,15 +11,24 @@ import { Coordinates } from '../models/coordinates';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // height: "100%",
+    paddingBottom: "10px"
   },
-  icon: {
-    // verticalAlign: "middle",
-    // justifyContent: "center",
-    // alignItems: "center",
-    height: "100%"
+  resultsText: {
+    padding: "10px",
+    fontStyle: "italic"
+  },
+  left: {
+    width: "100%",
+    paddingLeft: "15px",
+    paddingRight: "10px",
+  },
+  right: {
+    width: "100%",
+    paddingRight: "15px",
+  },
+  list: {
+    paddingBottom: "10px",
+    width: "100%"
   }
 }))
 
@@ -91,9 +100,14 @@ const BusinessList = (props: Props) => {
     )
   } else {
     return(
-      <Grid container direction="row" justifyContent="center" alignItems="flex-start" wrap="nowrap">
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="flex-start"
+        wrap="nowrap"
+      >
         <Grid
-          item
           container
           direction="column"
           justifyContent="center"
@@ -106,15 +120,43 @@ const BusinessList = (props: Props) => {
             setLoading={props.setLoading}
             setCurrentLocation={setCurrentLocation}
           />
-          <Typography>Showing results {currentLocation}</Typography>
-          {businesses.map((business, index) => (
-            <Grid key={index} item style={{width:"70%", paddingTop: "20px"}} onClick={() => {handleNavigate(business.id)}}>
-              <BusinessCard key={business.id} business={business} index={index + 1}/>
+          <Typography className={classes.resultsText}>
+            Showing results {currentLocation}
+          </Typography>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="flex-start"
+            wrap="nowrap"
+          >
+            <Grid
+              container
+              direction="column"
+              alignItems="flex-start"
+              className={classes.left}
+            >
+              {businesses.map((business, index) => (
+                <Grid
+                  item
+                  key={index}
+                  className={classes.list}
+                  onClick={() => {handleNavigate(business.id)}}
+                >
+                  <BusinessCard key={business.id} business={business} index={index + 1}/>
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-        <Grid>
-          <GoogleMap locations={businesses} location={defaultLocation}/>
+            <Grid
+              item
+              className={classes.right}
+            >
+              <GoogleMap locations={businesses} location={defaultLocation} dimensions={{
+                width: "100%",
+                height: "700px"
+              }}/>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     )

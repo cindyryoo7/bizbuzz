@@ -1,5 +1,5 @@
 import {  useState } from 'react';
-import { AppBar, Toolbar, makeStyles, Theme, alpha, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, makeStyles, Theme, alpha, Typography, Grid, Button, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import { Coordinates } from '../models/coordinates';
@@ -7,13 +7,9 @@ import { Coordinates } from '../models/coordinates';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
-    width: "90%",
-    height: "50%"
+    width: "50%",
   },
-  appBar: {
-    width: "100%"
-  },
-  toolbar: {
+  searchbar: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -24,13 +20,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '50%',
   },
   icon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // padding: theme.spacing(0, 2),
+    // height: '100%',
+    // position: 'absolute',
+    // pointerEvents: 'none',
+    // display: 'flex',
     border: "none",
     background: "transparent"
   },
@@ -88,33 +82,40 @@ const SearchBar = (props: Props) => {
     setValue(e.target.value);
   }
 
+//   <input
+//   type="text"
+//   placeholder="Search by location..."
+//   onChange={(e) => {handleChange(e)}}
+// />
+
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar position="static" >
         <Toolbar>
-          <div className={classes.toolbar}>
-            <form onSubmit={() => {handleSubmit()}}>
-              <label>
-                <input type="text" placeholder="Search by location..." onChange={(e) => {handleChange(e)}}></input>
-              </label>
-              <button className={classes.icon}>
-                <SearchIcon />
-              </button>
-            </form>
-          </div>
-          <div
-            className={classes.toolbar}
-            onClick={handleLocationPermission}
+          <Grid
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            className={classes.searchbar}
           >
+            <form onSubmit={handleSubmit}>
+              <Button className={classes.icon}>
+                <SearchIcon />
+              </Button>
+              <TextField
+                label="Search by location..."
+                onChange={(e) => {handleChange(e)}}
+              />
+            </form>
+          </Grid>
+          <Grid onClick={handleLocationPermission}>
             <div className={classes.icon}>
               <LocationOnOutlinedIcon />
             </div>
-            <Typography
-              className={classes.location}
-            >
-                Use my current location
+            <Typography className={classes.location}>
+              Use my current location
             </Typography>
-          </div>
+          </Grid>
         </Toolbar>
       </AppBar>
     </div>

@@ -16,13 +16,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type Props = {
   location: Coordinates | null,
-  locations: Business[] | null
+  locations: Business[] | null,
+  dimensions: {width: string, height: string}
 }
 
-const containerStyle = {
-  width: "400px",
-  height: "400px"
-}
+// const containerStyle = {
+//   width: "400px",
+//   height: "400px"
+// }
 
 const GoogleMap = (props: Props) => {
   const classes = useStyles();
@@ -87,7 +88,7 @@ const GoogleMap = (props: Props) => {
 
   return isLoaded ?
   <Map
-    mapContainerStyle={containerStyle}
+    mapContainerStyle={props.dimensions}
     center={center}
     zoom={30}
     onLoad={onLoad}
@@ -104,21 +105,3 @@ const GoogleMap = (props: Props) => {
 }
 
 export default GoogleMap;
-
-//working
-// return isLoaded ?
-// <Map
-//   mapContainerStyle={containerStyle}
-//   center={center}
-//   zoom={30}
-//   onLoad={onLoad}
-//   onUnmount={onUnmount}
-// >
-//   {markers.length
-//     ? markers.map((marker, index) => (
-//       <Marker key={index} position={marker}/>
-//     ))
-//     : <Marker position={center}/>
-//   }
-// </Map>
-// : <></>

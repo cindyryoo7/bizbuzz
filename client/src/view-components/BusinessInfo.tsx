@@ -35,7 +35,10 @@ const BusinessInfo = (props: Props) => {
       </Grid>
       <Grid>
         <Typography>Location:</Typography>
-        <GoogleMap location={props.details.coordinates} locations={null}/>
+        <GoogleMap location={props.details.coordinates} locations={null} dimensions={{
+          width: "400px",
+          height: "400px"
+        }}/>
         {props.details.location
           ? props.details.location.display_address.map((address, index) => (
               <Typography key={index}>{address}</Typography>
