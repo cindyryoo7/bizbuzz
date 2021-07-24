@@ -1,48 +1,47 @@
 import {  useState } from 'react';
-import { AppBar, Toolbar, makeStyles, Theme, alpha, Typography, Grid, Button, TextField } from '@material-ui/core';
+import { AppBar, Toolbar, makeStyles, Theme, alpha, Typography, Grid, Button, TextField, Box, Paper, IconButton, InputBase, Divider } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import { Coordinates } from '../models/coordinates';
+import SearchBar from "material-ui-search-bar";
+import CloseIcon from '@material-ui/icons/Close';
+import { Brightness1 } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: "60%",
+    flexGrow: 1
+  },
+  search: {
+    border: "none",
     flexGrow: 1,
     width: "50%",
+    marginRight: "3px",
+    display: 'flex',
+    minWidth: "250px",
   },
-  searchbar: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+  currentLoc: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: "center",
+    maxWidth: "225px",
     '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '50%',
+      backgroundColor: "#f7f7f9",
+    }
   },
-  icon: {
-    // padding: theme.spacing(0, 2),
-    // height: '100%',
-    // position: 'absolute',
-    // pointerEvents: 'none',
-    // display: 'flex',
-    border: "none",
-    background: "transparent"
-  },
-  text: {
-    color: 'inherit',
-    width: "100%",
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-  },
-  location: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    color: "blue"
+  iconButton: {
+    padding: 10,
+    justifyContent: "center",
+    width: "fit-content",
+    '&:hover': {
+      backgroundColor: 'transparent',
+      borderRadius: "0%",
+    }
   }
 }));
 
@@ -52,9 +51,10 @@ type Props = {
   setCurrentLocation: (currentLocation: string) => void
 }
 
-const SearchBar = (props: Props) => {
-  const classes = useStyles();
+const NavBar = (props: Props) => {
   const [value, setValue] = useState<string>("");
+
+  const classes = useStyles();
 
   const handleSubmit = () => {
     props.setLoading(true);
@@ -78,49 +78,41 @@ const SearchBar = (props: Props) => {
     })
   }
 
-  const handleChange = (e: any) => {
-    setValue(e.target.value);
+  const handleChange = (newValue: string) => {
+    setValue(newValue);
   }
 
-//   <input
-//   type="text"
-//   placeholder="Search by location..."
-//   onChange={(e) => {handleChange(e)}}
-// />
-
   return (
-    <div className={classes.root}>
-      <AppBar position="static" >
-        <Toolbar>
-          <Grid
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-            className={classes.searchbar}
-          >
-            <form onSubmit={handleSubmit}>
-              <Button className={classes.icon}>
-                <SearchIcon />
-              </Button>
-              <TextField
-                label="Search by location..."
-                onChange={(e) => {handleChange(e)}}
-              />
-            </form>
-          </Grid>
-          <Grid onClick={handleLocationPermission}>
-            <div className={classes.icon}>
-              <LocationOnOutlinedIcon />
-            </div>
-            <Typography className={classes.location}>
-              Use my current location
-            </Typography>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-evenly"
+      alignItems="center"
+      wrap="nowrap"
+      className={classes.root}
+    >
+      <SearchBar
+        value={value}
+        placeholder="Search by location..."
+        searchIcon={<SearchIcon style={{color: "#303C6C"}}/>}
+        onRequestSearch={handleSubmit}
+        onChange={(newValue) => {handleChange(newValue)}}
+        className={classes.search}
+      />
+      <Paper className={classes.currentLoc}>
+        <IconButton
+          color="secondary"
+          aria-label="directions"
+          className={classes.iconButton}
+          onClick={handleLocationPermission}
 
+        >
+          <LocationOnOutlinedIcon/>
+          <Typography noWrap>Use my current location</Typography>
+        </IconButton>
+      </Paper>
+    </Grid>
+  );
 }
 
-export default SearchBar;
+export default NavBar;
