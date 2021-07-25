@@ -4,6 +4,7 @@ import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import GoogleMap from '../controller-components/GoogleMap';
 import { Coordinates } from '../models/coordinates';
 import { useState, useEffect } from 'react';
+import Schedule from './Schedule';
 
 type Props = {
   details: Details,
@@ -46,13 +47,10 @@ const BusinessInfo = (props: Props) => {
       </Grid>
       <Grid>
         <Typography>Location:</Typography>
-
         <GoogleMap setIsMapLoaded={props.setLoading} markers={[coordinates]} dimensions={{
           width: "400px",
           height: "400px"
         }}/>
-
-
         {props.details.location
           ? props.details.location.display_address.map((address, index) => (
               <Typography key={index}>{address}</Typography>
@@ -60,7 +58,7 @@ const BusinessInfo = (props: Props) => {
           : null
         }
       </Grid>
-      <Grid>
+      {/* <Grid>
         <Typography>Hours:</Typography>
         {props.details.hours && props.details.hours[0].open.length
           ?
@@ -74,7 +72,12 @@ const BusinessInfo = (props: Props) => {
               <Typography>Saturday:</Typography>
               <Typography>Sunday:</Typography>
             </Grid>
-            <Grid container direction="column" justifyContent="center" alignItems="flex-start">
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="flex-start"
+            >
               {props.details.hours && props.details.hours[0].open.length
                 ? props.details.hours[0].open.map(day => (
                   <Typography key={day.day} noWrap>{day.start} to {day.end}</Typography>
@@ -85,7 +88,12 @@ const BusinessInfo = (props: Props) => {
           </Grid>
           : <Typography>No hours available.</Typography>
         }
-      </Grid>
+      </Grid> */}
+      {
+        props.details.hours && props.details.hours[0].open.length
+        ? <Schedule hours={props.details.hours[0].open}/>
+        : null
+      }
     </Grid>
   );
 

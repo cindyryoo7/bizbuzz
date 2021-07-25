@@ -1,14 +1,23 @@
 import { makeStyles, Theme, Typography, Grid, Chip } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import { Business } from '../models/business';
+import Categories from './Categories';
+import Transactions from './Transactions';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    minWidth: 345,
-    maxWidth: 800,
-    color: "blue",
-    height: "100%"
-  }
+    paddingLeft: "5px",
+    paddingBottom: "10px"
+  },
+  // container: {
+  //   padding: "5px"
+  // },
+  // text: {
+  //   paddingRight: "5px"
+  // },
+  // chip: {
+  //   paddingRight: "2px"
+  // }
 }))
 
 type Props = {
@@ -20,25 +29,17 @@ const CardFooter = (props: Props) => {
   const classes = useStyles();
 
   return (
-    <Grid container direction="row">
-      <Grid container direction="row" alignItems="center">
-        <Typography>
-          Categories:
-        </Typography>
-        {props.business.categories.map((category, index) => (
-          <Chip key={index} label={category.title}/>
-        ))}
-      </Grid>
+    <Grid
+      container
+      direction="column"
+      className={classes.root}
+    >
+      {props.business.categories.length
+        ? <Categories categories={props.business.categories}/>
+        : null
+      }
       {props.business.transactions.length
-        ?
-        <Grid container direction="row">
-          <Typography>
-            Transactions:
-          </Typography>
-          {props.business.transactions.map((transaction, index) => (
-            <Chip key={index} variant="outlined" size="small" label={transaction} icon={<DoneIcon style={{fill: "green"}}/>}/>
-          ))}
-        </Grid>
+        ? <Transactions transactions={props.business.transactions}/>
         : null
       }
   </Grid>

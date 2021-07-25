@@ -1,12 +1,13 @@
 import { makeStyles, Theme, Typography, Grid } from '@material-ui/core';
 import { Business } from '../models/business';
-import Ratings from './Ratings';
+import RatingsReviews from './RatingsReviews';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    paddingTop: "5px"
+    padding: "5px",
+    paddingTop: "10px"
   },
   name: {
     fontSize: "22px",
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: "5px"
   },
   left: {
-    width: "60%"
+    width: "60%",
+    padding: "5px"
   },
   right: {
     width: "40%"
@@ -65,17 +67,7 @@ const CardHeader = (props: Props) => {
         wrap="nowrap"
         className={classes.right}
       >
-        <Ratings rating={props.business.rating}/>
-        {/* <Grid item direction="row" justifyContent="center" alignItems="center" wrap="nowrap"> */}
-          <Typography
-            color="secondary"
-            component="p"
-            noWrap
-            className={classes.reviews}
-          >
-            {props.business.review_count}
-          </Typography>
-        {/* </Grid> */}
+        <RatingsReviews rating={props.business.rating} reviewCount={props.business.review_count}/>
       </Grid>
     </Grid>
   )

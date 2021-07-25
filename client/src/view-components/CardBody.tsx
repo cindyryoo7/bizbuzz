@@ -1,12 +1,13 @@
 import { makeStyles, Theme, Typography, Grid } from '@material-ui/core';
 import { Business } from '../models/business';
+import Address from './Address';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    minWidth: 345,
-    maxWidth: 800,
-    color: "blue",
-    height: "100%"
+    padding: "5px"
+  },
+  details: {
+    padding: "5px"
   }
 }))
 
@@ -25,24 +26,19 @@ const CardBody = (props: Props) => {
       justifyContent="space-between"
       alignItems="flex-start"
       wrap="nowrap"
+      className={classes.root}
     >
+      {props.business.location.display_address.length
+        ? <Address address={props.business.location.display_address} />
+        : null
+      }
       <Grid
         container
         direction="column"
         justifyContent="center"
-        alignItems="stretch"
+        alignItems="flex-end"
+        className={classes.details}
       >
-        <Typography noWrap>
-          {props.business.location.display_address[0]}
-        </Typography>
-        <Typography noWrap>
-          {props.business.location.display_address[1]}
-        </Typography>
-        <Typography noWrap>
-          {props.business.location.display_address[2] && props.business.location.display_address[2]}
-        </Typography>
-      </Grid>
-      <Grid container direction="column">
         <Typography noWrap>
           {props.business.display_phone}
         </Typography>
