@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles, Theme, Divider } from '@material-ui/core';
 import ReviewsList from '../view-components/ReviewsList';
 import { BusinessDetails as Details } from '../models/businessDetails';
 import { Review } from '../models/review';
@@ -10,24 +10,27 @@ type Props = {
   setLoading: (loading: boolean) => void
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    backgroundColor: "#fbe8a6",
+  },
+}))
+
 const BusinessDetails = (props: Props) => {
+  const classes = useStyles();
+
   return (
     <Grid
       container
-      direction="column"
+      direction="row"
       justifyContent="space-evenly"
       alignItems="flex-start"
+      className={classes.root}
+      wrap="nowrap"
     >
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="flex-start"
-        wrap='nowrap'
-      >
-        <BusinessInfo details={props.details} setLoading={props.setLoading}/>
-        <ReviewsList reviews={props.reviews}/>
-      </Grid>
+      <BusinessInfo details={props.details} setLoading={props.setLoading}/>
+      <Divider orientation="vertical" flexItem/>
+      <ReviewsList reviews={props.reviews} name={props.details.name} reviewCount={props.details.review_count}/>
     </Grid>
   );
 

@@ -1,5 +1,4 @@
-import { makeStyles, Theme, Typography, Grid, Chip } from '@material-ui/core';
-import DoneIcon from '@material-ui/icons/Done';
+import { makeStyles, Theme, Grid } from '@material-ui/core';
 import { Business } from '../models/business';
 import Categories from './Categories';
 import Transactions from './Transactions';
@@ -9,15 +8,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: "5px",
     paddingBottom: "10px"
   },
-  // container: {
-  //   padding: "5px"
-  // },
-  // text: {
-  //   paddingRight: "5px"
-  // },
-  // chip: {
-  //   paddingRight: "2px"
-  // }
 }))
 
 type Props = {

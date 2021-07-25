@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Grid, Link } from '@material-ui/core';
+import { Grid, Link, makeStyles, Theme } from '@material-ui/core';
 import { BusinessDetails as Details } from '../models/businessDetails';
 import { Review } from '../models/review';
 import PhotoGallery from '../view-components/PhotoGallery';
@@ -11,10 +11,28 @@ type Props = {
   setLoading: (loading: boolean) => void
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    // display: 'flex',
+    // flexWrap: 'wrap',
+    // justifyContent: 'space-evenly',
+    // overflow: 'hidden',
+    // backgroundColor: theme.palette.background.paper,
+    // height: "100%",
+    // width: "100%"
+  },
+  link: {
+    padding: "10px",
+    // backgroundColor: "white"
+  }
+}))
+
 const BusinessPage = (props: Props) => {
   const [businessId, setBusinessId] = useState<string>("");
   const [businessDetails, setBusinessDetails] = useState<Details>({} as Details);
   const [businessReviews, setBusinessReviews] = useState<Review[]>([]);
+
+  const classes = useStyles();
   const history = useHistory();
 
   const handleBack = () => {
@@ -55,8 +73,13 @@ const BusinessPage = (props: Props) => {
       justifyContent="center"
       alignItems="center"
     >
-      <Grid container direction="row" alignItems="flex-start">
-        <Link onClick={handleBack} color="secondary">{"< Back to Results"}</Link>
+      <Grid
+        container
+        direction="row"
+        alignItems="flex-start"
+        className={classes.link}
+      >
+        <Link onClick={handleBack} color="secondary" underline="always">{"< Back to Results"}</Link>
       </Grid>
       <Grid
         style={{width: "100%"}}

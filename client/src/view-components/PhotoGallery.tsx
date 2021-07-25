@@ -2,21 +2,26 @@ import { Grid, ImageList, ImageListItem, makeStyles, Theme } from '@material-ui/
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-    height: "100%",
-    width: "100%"
+    // display: 'flex',
+    // flexWrap: 'wrap',
+    // justifyContent: 'space-evenly',
+    // overflow: 'hidden',
+    // backgroundColor: "white"
+    // height: "100%",
+    // width: "100%"
+
   },
   imageList: {
-    width: '100%',
-    height: "100%",
+    // width: '100%',
+    // height: "100%",
+    // justifyContent: 'center',
+    // width: "100%"
   },
   image: {
-    paddingLeft: "50px",
-    paddingRight: "50px",
+    // paddingLeft: "50px",
+    // paddingRight: "50px",
+    // height: "auto",
+    // width: "100%"
   }
 }))
 
@@ -32,16 +37,21 @@ const PhotoGallery = (props: Props) => {
       <Grid
         container
         direction="row"
-        justifyContent="space-between"
+        justifyContent="center"
         alignItems="center"
         className={classes.root}
       >
-        <ImageList rowHeight={160} className={classes.imageList} cols={3}>
-            {props.photos.map((photo, index) => (
-              <ImageListItem key={index} cols={1} >
-                <img src={photo} alt={photo+index}/>
-              </ImageListItem>
-            ))}
+        <ImageList
+          gap={2}
+          cols={3}
+          rowHeight={300}
+          className={classes.imageList}
+        >
+          {props.photos.map((photo, index) => (
+            <ImageListItem key={index} cols={1} >
+              <img src={photo} alt={photo+index} className={classes.image}/>
+            </ImageListItem>
+          ))}
         </ImageList>
       </Grid>
     );

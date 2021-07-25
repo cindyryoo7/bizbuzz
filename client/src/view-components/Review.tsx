@@ -1,15 +1,35 @@
 import { Grid, Card, CardActionArea, Typography, CardHeader, Avatar, makeStyles, Link } from '@material-ui/core';
 import { Review as ReviewType } from '../models/review';
-import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
+import RatingsReviews from './RatingsReviews';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-
+    width: "90%",
   },
+  card: {
+    // backgroundColor: "#fbe8a6",
+    height: "100%",
+    width: "100%",
+    margin: "10px"
+  },
+  content: {
+    padding: "10px"
+  },
+  header: {
+    width: "100%",
+  },
+  text: {
+    padding: "10px"
+  },
+  link: {
+    width: "100%",
+    padding: "10px"
+  }
 }))
 
 type Props = {
   review: ReviewType,
+  reviewCount: number
 }
 
 const Review = (props: Props) => {
@@ -21,11 +41,17 @@ const Review = (props: Props) => {
       direction="column"
       justifyContent="center"
       alignItems="center"
-      style={{width:"90%"}}
+      className={classes.root}
     >
-      <Card style={{height:"100%", width:"100%"}}>
-        <CardActionArea>
-          <Grid container justifyContent="space-between" direction="row" style={{width:"100%"}} wrap="nowrap">
+      <Card className={classes.card}>
+        <CardActionArea className={classes.content}>
+          <Grid
+            container
+            justifyContent="space-between"
+            direction="row"
+            wrap="nowrap"
+            className={classes.header}
+          >
             <CardHeader
               avatar={
                 <Avatar alt="reviewer-avatar" src={props.review.user.image_url} />
@@ -34,16 +60,16 @@ const Review = (props: Props) => {
               subheader={props.review.time_created}
             >
             </CardHeader>
-            <Grid container direction="row">
-              <StarBorderOutlinedIcon />
-              <Typography>{props.review.rating}</Typography>
-            </Grid>
+            <RatingsReviews rating={props.review.rating} reviewCount={props.reviewCount}/>
           </Grid>
-          <Grid>
-            <Typography>{props.review.text}</Typography>
-          </Grid>
-          <Grid container direction="row" alignItems="flex-end">
-            <Link href={props.review.url}>
+          <Typography className={classes.text}>{props.review.text}</Typography>
+          <Grid
+            item
+            direction="row"
+            justifyContent="flex-end"
+            className={classes.link}
+          >
+            <Link href={props.review.url} color="secondary" underline="hover">
               See more...
             </Link>
           </Grid>

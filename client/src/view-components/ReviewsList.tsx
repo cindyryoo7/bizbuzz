@@ -1,26 +1,46 @@
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, makeStyles, Theme } from '@material-ui/core';
 import { Review as ReviewType } from '../models/review';
 import Review from './Review';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    width: "100%",
+    backgroundColor: "#fbe8a6",
+  },
+  heading: {
+    fontSize: "40px",
+    // align: "left",
+    padding: "5px"
+  },
+  list: {
+    width: "100%"
+  }
+}))
+
 type Props = {
   reviews: ReviewType[],
+  name: string,
+  reviewCount: number
 }
 
 const ReviewsList = (props: Props) => {
+  const classes = useStyles();
 
   if (props.reviews.length) {
     return (
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        style={{width: "100%"}}
-      >
-        <Typography>Reviews:</Typography>
-        {props.reviews.map(review => (
-          <Review key={review.id} review={review}/>
-        ))}
+      <Grid className={classes.root}>
+        <Typography className={classes.heading}>Reviews for {props.name}:</Typography>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+
+        >
+          {props.reviews.map(review => (
+            <Review key={review.id} review={review} reviewCount={props.reviewCount}/>
+          ))}
+        </Grid>
       </Grid>
     );
   } else {
