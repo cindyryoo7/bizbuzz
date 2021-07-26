@@ -15,18 +15,13 @@ const Routes = () => {
   // }); //Twitch SF Office Location
   // const [currentLocationPhysical, setCurrentLocationPhysical] = useState<string>("for San Francisco, CA");
   // const [loading, setLoading] = useState<boolean>(true);
-  const [centerCoords, setCenterCoords] = useState<GoogleCoords>({
-    lat: 37.79118339155342,
-    lng: -122.40330988014378
-  });//Twitch SF Office Location
-  const [centerPhysical, setCenterPhysical] = useState<string>("for San Francisco, CA");
+  // const [centerCoords, setCenterCoords] = useState<GoogleCoords>({
+  //   lat: 37.79118339155342,
+  //   lng: -122.40330988014378
+  // });//Twitch SF Office Location
+  // const [centerPhysical, setCenterPhysical] = useState<string>("for San Francisco, CA");
 
   const [loading, setLoading] = useState<boolean>(false); // change to true?
-
-  useEffect(() => {
-    console.log('centerCoords in routes updating')
-  }, [centerCoords])
-
 
   return(
     <Router>
@@ -35,15 +30,11 @@ const Routes = () => {
         <Route exact path='/'>
           <Homepage
             loading={loading}
-            centerCoords={centerCoords}
-            centerPhysical={centerPhysical}
-            setCenterCoords={setCenterCoords}
-            setCenterPhysical={setCenterPhysical}
-            // currentLocationCoords={currentLocationCoords}
-            // currentLocationPhysical={currentLocationPhysical}
+            // centerCoords={centerCoords}
+            // centerPhysical={centerPhysical}
+            // setCenterCoords={setCenterCoords}
+            // setCenterPhysical={setCenterPhysical}
             setLoading={setLoading}
-            // setCurrentLocationCoords={setCurrentLocationCoords}
-            // setCurrentLocationPhysical={setCurrentLocationPhysical}
           />
         </Route>
         <Route path='/business/:id'>

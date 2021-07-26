@@ -73,7 +73,9 @@ export const MapContainer = (props: Props) => {
 
   // useEffect(() => {
   //   console.log('component has loaded');
-  //   console.log('center', center);
+  //   console.log('props.center', props.center);
+  //   console.log('props.markers', props.markers)
+
   // }, [])
 
   // useEffect(() => {

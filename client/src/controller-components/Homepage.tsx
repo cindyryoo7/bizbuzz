@@ -26,15 +26,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type Props = {
   loading: boolean,
-  centerCoords: GoogleCoords,
-  centerPhysical: string,
-  // currentLocationCoords: Coordinates,
-  // currentLocationPhysical: string,
+  // centerCoords: GoogleCoords,
+  // centerPhysical: string,
   setLoading: (loading: boolean) => void,
-  // setCurrentLocationCoords: (currentLocationCoords: Coordinates) => void,
-  // setCurrentLocationPhysical: (currentLocationPhysical: string) => void
-  setCenterCoords: (centerCoords: GoogleCoords) => void,
-  setCenterPhysical: (centerPhysical: string) => void
+  // setCenterCoords: (centerCoords: GoogleCoords) => void,
+  // setCenterPhysical: (centerPhysical: string) => void
 }
 
 
@@ -45,47 +41,73 @@ const Homepage = (props: Props) => {
   //   longitude: -122.40330988014378
   // }); //Twitch SF Office Location
 
+  const [centerCoords, setCenterCoords] = useState<GoogleCoords>({
+    lat: 37.79118339155342,
+    lng: -122.40330988014378
+  });//Twitch SF Office Location
+  const [centerPhysical, setCenterPhysical] = useState<string>("for San Francisco, CA");
+
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [markers, setMarkers] = useState<GoogleCoords[]>([]);
+  const [updateType, setUpdateType] = useState<string>("coordinates");
 
-  const [mapCenter, setMapCenter] = useState<GoogleCoords>(props.centerCoords);
+  const [mapCenter, setMapCenter] = useState<GoogleCoords>(centerCoords);
 
   // const [isListLoaded, setIsListLoaded] = useState<boolean>(false);
   // const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
 
   const classes = useStyles();
 
-  // invokes GET requests to Yelp API if location coordinates change
-  useEffect(() => {
-    console.log('centerCoords useEffect firing', props.centerCoords)
-    getBusinessesByLatLong(props.centerCoords.lat.toString(), props.centerCoords.lng.toString());
-  }, [props.centerCoords]);
+  // // invokes GET requests to Yelp API if location coordinates change
+  // useEffect(() => {
+  //   console.log('centerCoords useEffect firing', centerCoords)
+  //   getBusinessesByLatLong(centerCoords.lat.toString(), centerCoords.lng.toString());
+  // }, [centerCoords]);
 
-  // invokes GET requests to Yelp API if location coordinates change
+  // // invokes GET requests to Yelp API if location coordinates change
+  // useEffect(() => {
+  //   console.log('centerPhysical useEffect firing')
+  //   getBusinessesByLocation(centerPhysical)
+  // }, [centerPhysical]);
+
   useEffect(() => {
-    console.log('centerPhysical useEffect firing')
-    getBusinessesByLocation(props.centerPhysical)
-  }, [props.centerPhysical]);
+    updateType === "coordinates"
+      ? getBusinessesByLatLong(centerCoords.lat.toString(), centerCoords.lng.toString())
+      : getBusinessesByLocation(centerPhysical)
+  }, [updateType, centerCoords, centerPhysical]);
 
 
   // pulls coordinates of all businesses returned from Yelp API
-  useEffect(() => {
-    if (businesses.length) {
-      console.log('businesses useEffect firing', businesses)
-      const allCoordinates = businesses.map(business => (
+  // useEffect(() => {
+  //   if (businesses.length) {
+  //     console.log('businesses useEffect firing', businesses)
+  //     const allCoordinates = businesses.map(business => (
+  //       {
+  //         lat: business.coordinates.latitude,
+  //         lng: business.coordinates.longitude,
+  //       }
+  //     ));
+
+  //     setMarkers(allCoordinates);
+  //     setMapCenter(allCoordinates[0]);
+  //   }
+  // }, [businesses])
+
+  // setMarkers([props.currentLocationCoords].concat(allCoordinates));
+  // props.setCenterCoords(allCoordinates[0]);
+
+  const parseCoordinates = (listOfBusinesses: Business[]) => {
+    if (listOfBusinesses.length) {
+      const allCoordinates = listOfBusinesses.map((business: Business) => (
         {
           lat: business.coordinates.latitude,
           lng: business.coordinates.longitude,
         }
       ));
-
       setMarkers(allCoordinates);
       setMapCenter(allCoordinates[0]);
     }
-  }, [businesses])
-
-  // setMarkers([props.currentLocationCoords].concat(allCoordinates));
-  // props.setCenterCoords(allCoordinates[0]);
+  }
 
 
 
@@ -95,7 +117,23 @@ const Homepage = (props: Props) => {
       .get(`/search/${location}`)
       .then(result => result.data)
       .then(result => {
+        console.log('getBusinessesByLocation firing')
         setBusinesses(result);
+        return result;
+      })
+      .then(result => {
+        console.log('getBusinessesByLocation 2 firing', result)
+        parseCoordinates(result);
+        // if (result.length) {
+        //   const allCoordinates = result.map((business: Business) => (
+        //     {
+        //       lat: business.coordinates.latitude,
+        //       lng: business.coordinates.longitude,
+        //     }
+        //   ));
+        //   setMarkers(allCoordinates);
+        //   setMapCenter(allCoordinates[0]);
+        // }
         // setCenterPhysical(`for ${location}`);
        })
       .catch(err => {
@@ -110,9 +148,24 @@ const Homepage = (props: Props) => {
       .get(`/search/${latitude}/${longitude}`)
       .then(result => result.data)
       .then(result => {
+        console.log('getBusinessesByLatLong firing')
         setBusinesses(result);
-        // setCenterPhysical('near you');
+        return result;
       })
+      .then(result => {
+        // if (result.length) {
+        //   console.log('getBusinessesByLatLong 2 firing', result)
+        //   const allCoordinates = result.map((business: Business) => (
+        //     {
+        //       lat: business.coordinates.latitude,
+        //       lng: business.coordinates.longitude,
+        //     }
+        //   ));
+        //   setMarkers(allCoordinates);
+        //   setMapCenter(allCoordinates[0]);
+        // }
+        parseCoordinates(result);
+       })
       .catch(err => { console.log(err) })
   }
 
@@ -153,11 +206,12 @@ const Homepage = (props: Props) => {
           <SearchBar
             businesses={businesses}
             setLoading={props.setLoading}
-            setCenterCoords={props.setCenterCoords}
-            setCenterPhysical={props.setCenterPhysical}
+            setCenterCoords={setCenterCoords}
+            setCenterPhysical={setCenterPhysical}
+            setUpdateType={setUpdateType}
           />
           <Typography className={classes.resultsText}>
-            Showing results {props.centerPhysical}
+            Showing results {centerPhysical}
           </Typography>
           <Grid
             container

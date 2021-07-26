@@ -53,7 +53,8 @@ type Props = {
   businesses: Business[],
   setLoading: (loading: boolean) => void,
   setCenterCoords: (centerCoords: GoogleCoords) => void,
-  setCenterPhysical: (centerPhysical: string) => void
+  setCenterPhysical: (centerPhysical: string) => void,
+  setUpdateType: (updateType: string) => void
 }
 
 const NavBar = (props: Props) => {
@@ -62,7 +63,7 @@ const NavBar = (props: Props) => {
   const classes = useStyles();
 
   const handleSubmit = () => {
-    console.log('handleSubmit firing')
+    // console.log('handleSubmit firing')
 
     // props.setLoading(true);
     // handleSearchLocation(`for ${value}`);
@@ -72,6 +73,7 @@ const NavBar = (props: Props) => {
         lng: props.businesses[0].coordinates.longitude
       });
       props.setCenterPhysical(`for ${value}`);
+      props.setUpdateType("physical");
     }
   }
 
@@ -80,7 +82,7 @@ const NavBar = (props: Props) => {
   // }
 
   const handleLocationPermission = () => {
-    console.log('handleLocationPermission firing')
+    // console.log('handleLocationPermission firing')
     // props.setLoading(true);
     navigator.geolocation.getCurrentPosition((position) => {
       let currentLocation = {
@@ -89,6 +91,7 @@ const NavBar = (props: Props) => {
       }
       props.setCenterCoords(currentLocation);
       props.setCenterPhysical('near you');
+      props.setUpdateType("coordinates");
     })
   }
 
