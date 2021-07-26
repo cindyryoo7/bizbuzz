@@ -44,8 +44,8 @@ const Schedule = (props: Props) => {
             alignItems="flex-start"
             className={classes.left}
           >
-            {days.map(day => (
-              <Typography>{day}:</Typography>
+            {days.map((day, index) => (
+              <Typography key={index}>{day}:</Typography>
             ))}
           </Grid>
           <Grid

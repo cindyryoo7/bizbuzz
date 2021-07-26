@@ -6,6 +6,8 @@ import { Coordinates } from '../models/coordinates';
 import SearchBar from "material-ui-search-bar";
 import CloseIcon from '@material-ui/icons/Close';
 import { Brightness1 } from '@material-ui/icons';
+import { Business } from '../models/business';
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type Props = {
+  businesses: Business[],
   setLoading: (loading: boolean) => void,
   setCurrentLocationCoords: (currentLocationCoords: Coordinates) => void,
   setCurrentLocationPhysical: (currentLocationPhysical: string) => void
@@ -57,9 +60,12 @@ const NavBar = (props: Props) => {
   const classes = useStyles();
 
   const handleSubmit = () => {
-    props.setLoading(true);
+    // props.setLoading(true);
     // handleSearchLocation(`for ${value}`);
-    props.setCurrentLocationPhysical(`for ${value}`);
+    if (props.businesses.length) {
+      props.setCurrentLocationCoords(props.businesses[0].coordinates);
+      props.setCurrentLocationPhysical(`for ${value}`);
+    }
   }
 
   // const handleSearchLocation = (location: string): void => {
@@ -67,7 +73,7 @@ const NavBar = (props: Props) => {
   // }
 
   const handleLocationPermission = () => {
-    props.setLoading(true);
+    // props.setLoading(true);
     navigator.geolocation.getCurrentPosition((position) => {
       let currentLocation = {
         latitude: position.coords.latitude,

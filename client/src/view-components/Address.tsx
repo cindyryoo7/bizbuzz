@@ -22,8 +22,8 @@ const Address = (props: Props) => {
       alignItems="stretch"
       className={classes.root}
     >
-      {props.address.map(address => (
-        <Typography noWrap>{address}</Typography>
+      {props.address.map((address, index) => (
+        <Typography key={index} noWrap>{address}</Typography>
       ))}
     </Grid>
   )

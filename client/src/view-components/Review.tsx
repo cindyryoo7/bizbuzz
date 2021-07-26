@@ -65,6 +65,7 @@ const Review = (props: Props) => {
           <Typography className={classes.text}>{props.review.text}</Typography>
           <Grid
             item
+            container
             direction="row"
             justifyContent="flex-end"
             className={classes.link}

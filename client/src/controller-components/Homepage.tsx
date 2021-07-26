@@ -36,7 +36,7 @@ type Props = {
 const Homepage = (props: Props) => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [markers, setMarkers] = useState<Coordinates[]>([]);
-  const [isListLoaded, setIsListLoaded] = useState<boolean>(false);
+  // const [isListLoaded, setIsListLoaded] = useState<boolean>(false);
   const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
 
   const classes = useStyles();
@@ -67,7 +67,10 @@ const Homepage = (props: Props) => {
     axios
       .get(`/search/${location}`)
       .then(result => result.data)
-      .then(result => { setBusinesses(result) })
+      .then(result => {
+        console.log('result', result)
+        setBusinesses(result)
+       })
       .catch(err => {
         console.log(err);
         alert("Could not execute search, try specifying a more exact location.");
@@ -83,12 +86,12 @@ const Homepage = (props: Props) => {
       .catch(err => { console.log(err) })
   }
 
-  useEffect(() => {
-    // if (isListLoaded && isMapLoaded) {
-    //   props.setLoading(false);
-    // }
-    props.setLoading(false);
-  }, [isListLoaded, isMapLoaded])
+  // useEffect(() => {
+  //   // if (isListLoaded && isMapLoaded) {
+  //   //   props.setLoading(false);
+  //   // }
+  //   props.setLoading(false);
+  // }, [isListLoaded, isMapLoaded])
 
   // conditionally render once a list of businesses has been returned by Yelp API
   if (!businesses.length || props.loading) {
@@ -118,6 +121,7 @@ const Homepage = (props: Props) => {
           className={classes.root}
         >
           <SearchBar
+            businesses={businesses}
             setLoading={props.setLoading}
             setCurrentLocationCoords={props.setCurrentLocationCoords}
             setCurrentLocationPhysical={props.setCurrentLocationPhysical}
@@ -132,15 +136,16 @@ const Homepage = (props: Props) => {
             alignItems="flex-start"
             wrap="nowrap"
           >
-            <BusinessList businesses={businesses} setIsListLoaded={setIsListLoaded}/>
+            {/* <BusinessList businesses={businesses} setIsListLoaded={setIsListLoaded}/> */}
+            <BusinessList businesses={businesses}/>
             <Grid
               item
               className={classes.right}
             >
               {businesses.length && markers.length
-                ? <GoogleMap setIsMapLoaded={setIsMapLoaded} markers={markers} dimensions={{
-                    width: "100%",
-                    height: "700px"
+                ? <GoogleMap setIsMapLoaded={setIsMapLoaded} markers={markers} zoom={12}isMarkerShown={true} dimensions={{
+                    width: "49%",
+                    height: "auto"
                   }}/>
                 : null
               }

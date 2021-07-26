@@ -12,7 +12,9 @@ const Routes = () => {
     longitude: -122.40330988014378
   }); //Twitch SF Office Location
   const [currentLocationPhysical, setCurrentLocationPhysical] = useState<string>("for San Francisco, CA");
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+
 
   return(
     <Router>

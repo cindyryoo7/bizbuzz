@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     bottom: "0px",
   },
   reviews: {
-    width: "30%",
-    align: "right",
+    width: "40%",
+    // align: "center",
   }
 }))
 
@@ -79,6 +79,7 @@ const RatingsReviews = ({rating, reviewCount}: Props) => {
       justifyContent="center"
       alignItems="center"
       wrap="nowrap"
+      className={classes.root}
     >
       <Grid
         container
@@ -91,7 +92,7 @@ const RatingsReviews = ({rating, reviewCount}: Props) => {
         <Typography>{overallRating}/5</Typography>
         &nbsp;
         {numberOfIcons.map((item, index) => (
-          <div key={index} style={{ 'width': `${Number(item * 17)}px` }} className={classes.fill}>
+          <div key={index} style={{ 'width': `${Number(item * 20)}px` }} className={classes.fill}>
             <img src={Image} alt="star" className={classes.outline}/>
           </div>
         ))}

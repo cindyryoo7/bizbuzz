@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type Props = {
   businesses: Business[],
-  setIsListLoaded: (isListLoaded: boolean) => void
+  // setIsListLoaded: (isListLoaded: boolean) => void
 }
 
 const BusinessList = (props: Props) => {
@@ -33,8 +33,12 @@ const BusinessList = (props: Props) => {
     history.push(`/business/${id}`);
   }
 
+  // useEffect(() => {
+  //   console.log('props.businesses', props.businesses)
+  // }, [props.businesses])
+
   if (props.businesses.length) {
-    props.setIsListLoaded(true);
+    // props.setIsListLoaded(true);
     return(
       <Grid
         container

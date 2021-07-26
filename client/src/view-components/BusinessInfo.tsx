@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   header: {
     // backgroundColor: "white"
+    width: "100%"
   }
 }))
 
@@ -42,10 +43,15 @@ const BusinessInfo = (props: Props) => {
   const classes = useStyles();
 
   useEffect(() => {
+    // console.log('name', props.details.name);
     if (props.details.name) {
       setCoordinates(props.details.coordinates);
     }
   }, [props.details])
+
+  // useEffect(() => {
+  //   console.log('coordinates', coordinates);
+  // }, [coordinates])
 
 
   return (
@@ -56,10 +62,28 @@ const BusinessInfo = (props: Props) => {
       alignItems="flex-start"
       className={classes.root}
     >
-      <Grid container direction="column" className={classes.header}>
-        <Grid container direction="row" wrap="nowrap">
+      <Grid
+        container
+        direction="column"
+        className={classes.header}
+      >
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-evenly"
+          alignItems="center"
+          wrap="nowrap"
+        >
           <Typography className={classes.name} noWrap>{props.details.name}</Typography>
-          <RatingsReviews rating={props.details.rating} reviewCount={props.details.review_count}/>
+          <Grid
+            item
+            container
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <RatingsReviews rating={props.details.rating} reviewCount={props.details.review_count}/>
+          </Grid>
         </Grid>
         {props.details.categories && props.details.categories.length
           ? <Categories categories={props.details.categories}/>
@@ -72,7 +96,7 @@ const BusinessInfo = (props: Props) => {
       </Grid>
       <Grid className={classes.location}>
         <Typography className={classes.heading}>Location:</Typography>
-        <GoogleMap setIsMapLoaded={props.setLoading} markers={[coordinates]} dimensions={{
+        <GoogleMap setIsMapLoaded={props.setLoading} markers={[coordinates]} zoom={13} isMarkerShown={true} dimensions={{
           width: "400px",
           height: "400px"
         }}/>
