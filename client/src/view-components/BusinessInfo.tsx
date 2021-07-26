@@ -4,7 +4,7 @@ import GoogleMap from '../controller-components/GoogleMap';
 import { Coordinates } from '../models/coordinates';
 import { useState, useEffect } from 'react';
 import Schedule from './Schedule';
-import RatingsReviews from './RatingsReviews';
+import Ratings from './Ratings';
 import Categories from './Categories';
 import Transactions from './Transactions';
 import Address from './Address';
@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   header: {
     // backgroundColor: "white"
     width: "100%"
+  },
+  ratings: {
+    paddingRight: "5px"
   }
 }))
 
@@ -79,15 +82,30 @@ const BusinessInfo = (props: Props) => {
           alignItems="center"
           wrap="nowrap"
         >
-          <Typography className={classes.name} noWrap>{props.details.name}</Typography>
+          <Grid item>
+            <Typography className={classes.name} noWrap>{props.details.name}</Typography>
+          </Grid>
           <Grid
             item
             container
             direction="row"
-            justifyContent="flex-start"
+            justifyContent="flex-end"
             alignItems="center"
+            wrap="nowrap"
+            className={classes.ratings}
           >
-            <RatingsReviews rating={props.details.rating} reviewCount={props.details.review_count}/>
+            <Grid>
+              <Ratings rating={props.details.rating}/>
+            </Grid>
+            &nbsp;
+            <Grid>
+              <Typography
+                noWrap
+                align="right"
+              >
+                ({props.details.review_count})
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
         {props.details.categories && props.details.categories.length

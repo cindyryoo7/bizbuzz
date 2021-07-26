@@ -1,6 +1,6 @@
 import { Grid, Card, CardActionArea, Typography, CardHeader, Avatar, makeStyles, Link } from '@material-ui/core';
 import { Review as ReviewType } from '../models/review';
-import RatingsReviews from './RatingsReviews';
+import Ratings from './Ratings';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +60,7 @@ const Review = (props: Props) => {
               subheader={props.review.time_created}
             >
             </CardHeader>
-            <RatingsReviews rating={props.review.rating} reviewCount={props.reviewCount}/>
+            <Ratings rating={props.review.rating}/>
           </Grid>
           <Typography className={classes.text}>{props.review.text}</Typography>
           <Grid

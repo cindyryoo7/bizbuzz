@@ -1,6 +1,6 @@
 import { makeStyles, Theme, Typography, Grid } from '@material-ui/core';
 import { Business } from '../models/business';
-import RatingsReviews from './RatingsReviews';
+import Ratings from './Ratings';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -12,13 +12,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   name: {
     fontSize: "22px",
   },
-  rating: {
-    width: "70%"
+  ratings: {
+    width: "95%"
   },
   reviews: {
-    width: "30%",
-    align: "left",
-    paddingLeft: "5px"
+    paddingLeft: "5%"
   },
   left: {
     width: "60%",
@@ -67,7 +65,17 @@ const CardHeader = (props: Props) => {
         wrap="nowrap"
         className={classes.right}
       >
-        <RatingsReviews rating={props.business.rating} reviewCount={props.business.review_count}/>
+        <Grid className={classes.ratings}>
+          <Ratings rating={props.business.rating}/>
+        </Grid>
+        <Grid className={classes.reviews}>
+          <Typography
+            noWrap
+            align="right"
+          >
+            ({props.business.review_count})
+          </Typography>
+        </Grid>
       </Grid>
     </Grid>
   )
