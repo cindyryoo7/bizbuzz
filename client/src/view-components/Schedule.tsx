@@ -7,7 +7,7 @@ type Props = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    padding: "5px",
+    padding: "10px",
     width: "100%"
   },
   heading: {
@@ -33,7 +33,7 @@ const Schedule = (props: Props) => {
         <Grid
           container
           direction="row"
-          justifyContent="flex-start"
+          justifyContent="space-between"
           alignItems="flex-start"
           wrap="nowrap"
         >

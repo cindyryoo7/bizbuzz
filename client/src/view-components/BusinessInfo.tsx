@@ -119,7 +119,12 @@ const BusinessInfo = (props: Props) => {
       </Grid>
       <Grid className={classes.location}>
         <Typography className={classes.heading}>Location:</Typography>
-        <GoogleMap center={coordinates} markers={[coordinates]} zoom={13} isMarkerShown={true} dimensions={{
+        {/* <GoogleMap center={coordinates} markers={[coordinates]} zoom={13} isMarkerShown={true} dimensions={{
+          width: "400px",
+          height: "400px"
+        }}/> */}
+        <GoogleMap center={coordinates} markers={[coordinates]} zoom={13} isMarkerShown={true}
+           dimensions={{
           width: "400px",
           height: "400px"
         }}/>
@@ -128,13 +133,17 @@ const BusinessInfo = (props: Props) => {
           : null
         }
       </Grid>
-      {props.details.hours && props.details.hours[0].open
-        ? <Schedule hours={props.details.hours[0].open}/>
-        : null
-      }
+      <Grid>
+        {props.details.hours && props.details.hours[0].open
+          ? <Schedule hours={props.details.hours[0].open}/>
+          : null
+        }
+      </Grid>
     </Grid>
   );
 
 }
+
+// containerElement={<div style={{ height: `400px` }} />}
 
 export default BusinessInfo;

@@ -227,10 +227,10 @@ const Homepage = (props: Props) => {
               className={classes.right}
             >
               {businesses.length && markers.length
-                ? <GoogleMap center={mapCenter} markers={markers} zoom={12} isMarkerShown={true} dimensions={{
+                ? <GoogleMap center={mapCenter} markers={markers} zoom={13} isMarkerShown={true} dimensions={{
                     width: "49%",
                     height: "auto"
-                  }}/>
+                  }} />
                 : null
               }
             </Grid>

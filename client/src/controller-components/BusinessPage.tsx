@@ -17,9 +17,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     // flexWrap: 'wrap',
     // justifyContent: 'space-evenly',
     // overflow: 'hidden',
-    // backgroundColor: theme.palette.background.paper,
+    // backgroundColor: "white",
     // height: "100%",
     // width: "100%"
+    // backgroundColor: "#fbe8a6",
   },
   link: {
     padding: "10px",
@@ -72,6 +73,7 @@ const BusinessPage = (props: Props) => {
       direction="column"
       justifyContent="center"
       alignItems="center"
+      className={classes.root}
     >
       <Grid
         container

@@ -12,7 +12,7 @@ type Props = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    backgroundColor: "#fbe8a6",
+    // backgroundColor: "white",
   },
 }))
 

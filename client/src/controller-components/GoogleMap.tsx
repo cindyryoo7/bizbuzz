@@ -1,5 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { Grid, makeStyles, Theme } from '@material-ui/core';
+
 import { GOOGLE_API_KEY } from "../.env";
 import { Coordinates } from '../models/coordinates';
 import { GoogleCoords } from '../models/googleCoords';
@@ -18,8 +20,17 @@ type Props = {
   dimensions: {width: string, height: string}
   // setIsMapLoaded: (isMapLoaded: boolean) => void,
   isMarkerShown: boolean,
-  zoom: number
+  zoom: number,
+  containerElement?: any
+
 }
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    height: "400px !important",
+    width: "400px !important"
+  }
+}))
 
 // type GoogleCoords = {
 //   lat: number,
@@ -27,6 +38,7 @@ type Props = {
 // }
 
 export const MapContainer = (props: Props) => {
+  const classes = useStyles();
   // const [center, setCenter] = useState<GoogleCoords>({
   //   lat: 37.79118339155342,
   //   lng: -122.40330988014378
@@ -82,22 +94,28 @@ export const MapContainer = (props: Props) => {
   //   console.log('map center is changing')
   // }, [props.center])
 
+  useEffect(() => {
+    console.log('props.dimensions', props.dimensions)
+  }, [props.dimensions])
+
 
 
   return (
-    <Map
-      google={props.google}
-      zoom={props.zoom}
-      style={props.dimensions}
-      center={props.center}
-    >
-      {/* {props.isMarkerShown && <Marker position={{ lat: 37.79118339155342, lng: -122.40330988014378 }} />} */}
-      {props.isMarkerShown &&
-        props.markers.map((marker, index) => (
-          <Marker key={index} position={{ lat: marker.lat, lng: marker.lng }} />
-        ))
-      }
-      </Map>
+    <Grid className={classes.root}>
+      <Map
+        google={props.google}
+        zoom={props.zoom}
+        style={{width: props.dimensions.width, height: props.dimensions.height, position:'absolute'}}
+        center={props.center}
+      >
+        {/* {props.isMarkerShown && <Marker position={{ lat: 37.79118339155342, lng: -122.40330988014378 }} />} */}
+        {props.isMarkerShown &&
+          props.markers.map((marker, index) => (
+            <Marker key={index} position={{ lat: marker.lat, lng: marker.lng }} />
+          ))
+        }
+        </Map>
+    </Grid>
   );
 }
 
