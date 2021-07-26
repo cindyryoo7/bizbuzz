@@ -2,6 +2,8 @@ import React, { Component, useEffect, useState } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { GOOGLE_API_KEY } from "../.env";
 import { Coordinates } from '../models/coordinates';
+import { GoogleCoords } from '../models/googleCoords';
+
 
 // const mapStyles = {
 //   width: '49%',
@@ -10,33 +12,35 @@ import { Coordinates } from '../models/coordinates';
 
 type Props = {
   google: any,
-  markers: Coordinates[],
+  center: GoogleCoords,
+  markers: GoogleCoords[],
+  // setMapCenter: (mapCenter: GoogleCoords) => void,
   dimensions: {width: string, height: string}
-  setIsMapLoaded: (isMapLoaded: boolean) => void,
+  // setIsMapLoaded: (isMapLoaded: boolean) => void,
   isMarkerShown: boolean,
   zoom: number
 }
 
-type GoogleCoords = {
-  lat: number,
-  lng: number
-}
+// type GoogleCoords = {
+//   lat: number,
+//   lng: number
+// }
 
 export const MapContainer = (props: Props) => {
-  const [center, setCenter] = useState<GoogleCoords>({
-    lat: 37.79118339155342,
-    lng: -122.40330988014378
-  });
+  // const [center, setCenter] = useState<GoogleCoords>({
+  //   lat: 37.79118339155342,
+  //   lng: -122.40330988014378
+  // });
 
-  const handleNewCenter = () => {
-    if (props.markers.length && props.markers[0].latitude) {
-      const currentLatLng = {
-        lat: props.markers[0].latitude,
-        lng: props.markers[0].longitude
-      };
-      setCenter(currentLatLng)
-    }
-  }
+  // const handleNewCenter = () => {
+  //   if (props.markers.length && props.markers[0].lat) {
+  //     const currentLatLng = {
+  //       lat: props.markers[0].lat,
+  //       lng: props.markers[0].lng
+  //     };
+  //     setCenter(currentLatLng)
+  //   }
+  // }
 
   // const recenterMap = () => {
   //   // const map = this.map;
@@ -50,18 +54,18 @@ export const MapContainer = (props: Props) => {
   //   }
   // }
 
-  useEffect(() => {
-    handleNewCenter();
-    // if (props.markers.length) {
-    //   const currentLatLng = {
-    //     lat: props.markers[0].latitude,
-    //     lng: props.markers[0].longitude
-    //   };
-    //   setCenter(currentLatLng);
-    //   console.log('currentLatLng', currentLatLng)
-    // }
-    // console.log('props.markers', props.markers)
-  }, [props.markers])
+  // useEffect(() => {
+  //   handleNewCenter();
+  //   // if (props.markers.length) {
+  //   //   const currentLatLng = {
+  //   //     lat: props.markers[0].latitude,
+  //   //     lng: props.markers[0].longitude
+  //   //   };
+  //   //   setCenter(currentLatLng);
+  //   //   console.log('currentLatLng', currentLatLng)
+  //   // }
+  //   // console.log('props.markers', props.markers)
+  // }, [props.markers])
 
   // useEffect(() => {
   //   console.log('center', center)
@@ -72,6 +76,10 @@ export const MapContainer = (props: Props) => {
   //   console.log('center', center);
   // }, [])
 
+  // useEffect(() => {
+  //   console.log('map center is changing')
+  // }, [props.center])
+
 
 
   return (
@@ -79,12 +87,12 @@ export const MapContainer = (props: Props) => {
       google={props.google}
       zoom={props.zoom}
       style={props.dimensions}
-      center={center}
+      center={props.center}
     >
       {/* {props.isMarkerShown && <Marker position={{ lat: 37.79118339155342, lng: -122.40330988014378 }} />} */}
       {props.isMarkerShown &&
         props.markers.map((marker, index) => (
-          <Marker key={index} position={{ lat: marker.latitude, lng: marker.longitude }} />
+          <Marker key={index} position={{ lat: marker.lat, lng: marker.lng }} />
         ))
       }
       </Map>

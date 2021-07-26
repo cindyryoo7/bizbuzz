@@ -8,6 +8,8 @@ import RatingsReviews from './RatingsReviews';
 import Categories from './Categories';
 import Transactions from './Transactions';
 import Address from './Address';
+import { GoogleCoords } from '../models/googleCoords';
+
 
 type Props = {
   details: Details,
@@ -38,14 +40,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 const BusinessInfo = (props: Props) => {
-  const [coordinates, setCoordinates] = useState<Coordinates>({} as Coordinates);
+  const [coordinates, setCoordinates] = useState<GoogleCoords>({} as GoogleCoords);
 
   const classes = useStyles();
 
   useEffect(() => {
     // console.log('name', props.details.name);
     if (props.details.name) {
-      setCoordinates(props.details.coordinates);
+      setCoordinates({
+        lat: props.details.coordinates.latitude,
+        lng: props.details.coordinates.longitude
+      });
     }
   }, [props.details])
 
@@ -96,7 +101,7 @@ const BusinessInfo = (props: Props) => {
       </Grid>
       <Grid className={classes.location}>
         <Typography className={classes.heading}>Location:</Typography>
-        <GoogleMap setIsMapLoaded={props.setLoading} markers={[coordinates]} zoom={13} isMarkerShown={true} dimensions={{
+        <GoogleMap center={coordinates} markers={[coordinates]} zoom={13} isMarkerShown={true} dimensions={{
           width: "400px",
           height: "400px"
         }}/>

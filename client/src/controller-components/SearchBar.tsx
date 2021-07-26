@@ -7,6 +7,8 @@ import SearchBar from "material-ui-search-bar";
 import CloseIcon from '@material-ui/icons/Close';
 import { Brightness1 } from '@material-ui/icons';
 import { Business } from '../models/business';
+import { GoogleCoords } from '../models/googleCoords';
+
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -50,8 +52,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 type Props = {
   businesses: Business[],
   setLoading: (loading: boolean) => void,
-  setCurrentLocationCoords: (currentLocationCoords: Coordinates) => void,
-  setCurrentLocationPhysical: (currentLocationPhysical: string) => void
+  setCenterCoords: (centerCoords: GoogleCoords) => void,
+  setCenterPhysical: (centerPhysical: string) => void
 }
 
 const NavBar = (props: Props) => {
@@ -60,11 +62,16 @@ const NavBar = (props: Props) => {
   const classes = useStyles();
 
   const handleSubmit = () => {
+    console.log('handleSubmit firing')
+
     // props.setLoading(true);
     // handleSearchLocation(`for ${value}`);
     if (props.businesses.length) {
-      props.setCurrentLocationCoords(props.businesses[0].coordinates);
-      props.setCurrentLocationPhysical(`for ${value}`);
+      props.setCenterCoords({
+        lat: props.businesses[0].coordinates.latitude,
+        lng: props.businesses[0].coordinates.longitude
+      });
+      props.setCenterPhysical(`for ${value}`);
     }
   }
 
@@ -73,14 +80,15 @@ const NavBar = (props: Props) => {
   // }
 
   const handleLocationPermission = () => {
+    console.log('handleLocationPermission firing')
     // props.setLoading(true);
     navigator.geolocation.getCurrentPosition((position) => {
       let currentLocation = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
       }
-      props.setCurrentLocationCoords(currentLocation);
-      props.setCurrentLocationPhysical("near you");
+      props.setCenterCoords(currentLocation);
+      props.setCenterPhysical('near you');
     })
   }
 

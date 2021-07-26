@@ -6,7 +6,7 @@ import BusinessCard from './BusinessCard';
 import { useHistory } from "react-router-dom";
 import SearchBar from '../controller-components/SearchBar';
 import GoogleMap from './GoogleMap';
-import { Coordinates } from '../models/coordinates';
+import { GoogleCoords } from '../models/googleCoords';
 import BusinessList from './BusinessList';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -26,41 +26,68 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type Props = {
   loading: boolean,
-  currentLocationCoords: Coordinates,
-  currentLocationPhysical: string,
+  centerCoords: GoogleCoords,
+  centerPhysical: string,
+  // currentLocationCoords: Coordinates,
+  // currentLocationPhysical: string,
   setLoading: (loading: boolean) => void,
-  setCurrentLocationCoords: (currentLocationCoords: Coordinates) => void,
-  setCurrentLocationPhysical: (currentLocationPhysical: string) => void
+  // setCurrentLocationCoords: (currentLocationCoords: Coordinates) => void,
+  // setCurrentLocationPhysical: (currentLocationPhysical: string) => void
+  setCenterCoords: (centerCoords: GoogleCoords) => void,
+  setCenterPhysical: (centerPhysical: string) => void
 }
 
+
+
 const Homepage = (props: Props) => {
+  // const [currentLocationCoords, setCurrentLocationCoords] = useState<Coordinates>({
+  //   latitude: 37.79118339155342,
+  //   longitude: -122.40330988014378
+  // }); //Twitch SF Office Location
+
   const [businesses, setBusinesses] = useState<Business[]>([]);
-  const [markers, setMarkers] = useState<Coordinates[]>([]);
+  const [markers, setMarkers] = useState<GoogleCoords[]>([]);
+
+  const [mapCenter, setMapCenter] = useState<GoogleCoords>(props.centerCoords);
+
   // const [isListLoaded, setIsListLoaded] = useState<boolean>(false);
-  const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
+  // const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
 
   const classes = useStyles();
 
   // invokes GET requests to Yelp API if location coordinates change
   useEffect(() => {
-    getBusinessesByLatLong(props.currentLocationCoords.latitude.toString(), props.currentLocationCoords.longitude.toString());
-  }, [props.currentLocationCoords]);
+    console.log('centerCoords useEffect firing', props.centerCoords)
+    getBusinessesByLatLong(props.centerCoords.lat.toString(), props.centerCoords.lng.toString());
+  }, [props.centerCoords]);
 
   // invokes GET requests to Yelp API if location coordinates change
   useEffect(() => {
-    getBusinessesByLocation(props.currentLocationPhysical)
-  }, [props.currentLocationPhysical]);
+    console.log('centerPhysical useEffect firing')
+    getBusinessesByLocation(props.centerPhysical)
+  }, [props.centerPhysical]);
 
 
   // pulls coordinates of all businesses returned from Yelp API
   useEffect(() => {
     if (businesses.length) {
+      console.log('businesses useEffect firing', businesses)
       const allCoordinates = businesses.map(business => (
-        business.coordinates
+        {
+          lat: business.coordinates.latitude,
+          lng: business.coordinates.longitude,
+        }
       ));
-      setMarkers([props.currentLocationCoords].concat(allCoordinates));
+
+      setMarkers(allCoordinates);
+      setMapCenter(allCoordinates[0]);
     }
   }, [businesses])
+
+  // setMarkers([props.currentLocationCoords].concat(allCoordinates));
+  // props.setCenterCoords(allCoordinates[0]);
+
+
 
   // GET request to Yelp API by location in string format
   const getBusinessesByLocation = (location: string): void => {
@@ -68,12 +95,12 @@ const Homepage = (props: Props) => {
       .get(`/search/${location}`)
       .then(result => result.data)
       .then(result => {
-        console.log('result', result)
-        setBusinesses(result)
+        setBusinesses(result);
+        // setCenterPhysical(`for ${location}`);
        })
       .catch(err => {
         console.log(err);
-        alert("Could not execute search, try specifying a more exact location.");
+        alert("Could not execute search. Try specifying a more exact location.");
       })
   }
 
@@ -82,7 +109,10 @@ const Homepage = (props: Props) => {
     axios
       .get(`/search/${latitude}/${longitude}`)
       .then(result => result.data)
-      .then(result => { setBusinesses(result) })
+      .then(result => {
+        setBusinesses(result);
+        // setCenterPhysical('near you');
+      })
       .catch(err => { console.log(err) })
   }
 
@@ -123,11 +153,11 @@ const Homepage = (props: Props) => {
           <SearchBar
             businesses={businesses}
             setLoading={props.setLoading}
-            setCurrentLocationCoords={props.setCurrentLocationCoords}
-            setCurrentLocationPhysical={props.setCurrentLocationPhysical}
+            setCenterCoords={props.setCenterCoords}
+            setCenterPhysical={props.setCenterPhysical}
           />
           <Typography className={classes.resultsText}>
-            Showing results {props.currentLocationPhysical}
+            Showing results {props.centerPhysical}
           </Typography>
           <Grid
             container
@@ -143,7 +173,7 @@ const Homepage = (props: Props) => {
               className={classes.right}
             >
               {businesses.length && markers.length
-                ? <GoogleMap setIsMapLoaded={setIsMapLoaded} markers={markers} zoom={12}isMarkerShown={true} dimensions={{
+                ? <GoogleMap center={mapCenter} markers={markers} zoom={12} isMarkerShown={true} dimensions={{
                     width: "49%",
                     height: "auto"
                   }}/>
