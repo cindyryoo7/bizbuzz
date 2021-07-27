@@ -1,6 +1,8 @@
 import { Grid, Card, CardActionArea, Typography, CardHeader, Avatar, makeStyles, Link } from '@material-ui/core';
 import { Review as ReviewType } from '../models/review';
 import Ratings from './Ratings';
+import moment from 'moment';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,8 +58,8 @@ const Review = (props: Props) => {
               avatar={
                 <Avatar alt="reviewer-avatar" src={props.review.user.image_url} />
               }
-              title={props.review.user.name}
-              subheader={props.review.time_created}
+              title={<Typography noWrap>{props.review.user.name}</Typography>}
+              subheader={<Typography noWrap>{moment(props.review.time_created).format("MMMM D, YYYY [at] LT")}</Typography>}
             >
             </CardHeader>
             <Ratings rating={props.review.rating}/>

@@ -99,7 +99,7 @@ const RatingsReviews = ({rating}: Props) => {
         {numberOfIcons.map((item, index) => (
           <div className={classes.container}>
             <div key={index} style={{ 'width': `${Number(item * 20)}px` }} className={classes.fill}>
-              <img src={Image} alt="star" className={classes.outline}/>
+              <img src={Image} alt="honeycomb icon" className={classes.outline}/>
             </div>
           </div>
 

@@ -25,12 +25,21 @@ type Props = {
 
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    height: "400px !important",
-    width: "400px !important"
-  }
-}))
+// const useStyles = makeStyles((theme: Theme) => ({
+//   root: {
+//     height: "650px !important",
+//     width: "650px !important",
+//     position: "relative"
+//   }
+// }))
+
+const useStyles = makeStyles({
+  root: (props: Props) => ({
+    height: props.dimensions.height,
+    width: props.dimensions.width,
+    position: "relative"
+  }),
+});
 
 // type GoogleCoords = {
 //   lat: number,
@@ -38,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 // }
 
 export const MapContainer = (props: Props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
   // const [center, setCenter] = useState<GoogleCoords>({
   //   lat: 37.79118339155342,
   //   lng: -122.40330988014378

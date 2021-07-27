@@ -12,7 +12,7 @@ import BusinessList from './BusinessList';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
-    paddingBottom: "10px"
+    paddingBottom: "10px",
   },
   resultsText: {
     padding: "10px",
@@ -221,15 +221,17 @@ const Homepage = (props: Props) => {
             wrap="nowrap"
           >
             {/* <BusinessList businesses={businesses} setIsListLoaded={setIsListLoaded}/> */}
-            <BusinessList businesses={businesses}/>
+            {/* <Grid item className={classes.list}> */}
+              <BusinessList businesses={businesses}/>
+            {/* </Grid> */}
             <Grid
               item
               className={classes.right}
             >
               {businesses.length && markers.length
                 ? <GoogleMap center={mapCenter} markers={markers} zoom={13} isMarkerShown={true} dimensions={{
-                    width: "49%",
-                    height: "auto"
+                    width: "650px",
+                    height: "650px"
                   }} />
                 : null
               }

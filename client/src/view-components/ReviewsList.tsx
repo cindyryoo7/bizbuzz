@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   heading: {
     fontSize: "40px",
     // align: "left",
-    padding: "5px"
+    padding: "10px"
   },
   list: {
     width: "100%"

@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Business } from '../models/business';
-import { Grid, CircularProgress, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Grid, CircularProgress, makeStyles, Theme, Typography, Box } from '@material-ui/core';
 import BusinessCard from './BusinessCard';
 import { useHistory } from "react-router-dom";
 import SearchBar from '../controller-components/SearchBar';
@@ -9,10 +9,12 @@ import GoogleMap from './GoogleMap';
 import { Coordinates } from '../models/coordinates';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  left: {
+  root: {
     width: "100%",
     paddingLeft: "15px",
     paddingRight: "10px",
+    maxHeight: '665px',
+    overflowY: 'scroll',
   },
   list: {
     paddingBottom: "10px",
@@ -40,11 +42,11 @@ const BusinessList = (props: Props) => {
   if (props.businesses.length) {
     // props.setIsListLoaded(true);
     return(
-      <Grid
-        container
-        direction="column"
-        alignItems="flex-start"
-        className={classes.left}
+      <Box
+        // container
+        // direction="column"
+        // alignItems="flex-start"
+        className={classes.root}
       >
         {props.businesses.map((business, index) => (
           <Grid
@@ -56,7 +58,7 @@ const BusinessList = (props: Props) => {
             <BusinessCard key={business.id} business={business} index={index + 1}/>
           </Grid>
         ))}
-      </Grid>
+      </Box>
     )
   } else {
     return null;

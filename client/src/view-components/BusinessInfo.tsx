@@ -125,19 +125,19 @@ const BusinessInfo = (props: Props) => {
         }}/> */}
         <GoogleMap center={coordinates} markers={[coordinates]} zoom={13} isMarkerShown={true}
            dimensions={{
-          width: "400px",
-          height: "400px"
+             width: "400px",
+             height: "400px"
         }}/>
         {props.details.location && props.details.location.display_address.length
           ? <Address address={props.details.location.display_address} />
           : null
         }
-      </Grid>
-      <Grid>
-        {props.details.hours && props.details.hours[0].open
-          ? <Schedule hours={props.details.hours[0].open}/>
-          : null
-        }
+        <Grid>
+          {props.details.hours && props.details.hours[0].open
+            ? <Schedule hours={props.details.hours[0].open}/>
+            : null
+          }
+        </Grid>
       </Grid>
     </Grid>
   );
