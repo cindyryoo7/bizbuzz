@@ -1,5 +1,7 @@
 import { Grid, Typography, makeStyles, Theme } from '@material-ui/core';
 import { Hours } from '../models/hours';
+import moment from 'moment';
+import { useState, useEffect } from 'react';
 
 type Props = {
   hours: Hours[]
@@ -7,11 +9,12 @@ type Props = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    padding: "10px",
+    padding: "5px",
     width: "100%"
   },
   heading: {
-    fontSize: "20px"
+    fontSize: "20px",
+    fontWeight: "bold"
   },
   left: {
     width: "20%"
@@ -23,7 +26,43 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Schedule = (props: Props) => {
   const classes = useStyles();
+  const [formattedHours, setFormattedHours] = useState<string[]>([]);
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+  useEffect(() => {
+    console.log(props.hours)
+  }, [])
+
+  const mapHours = (hours: Hours[]) => {
+    let currentDay = -1;
+    let currentDayText = "";
+    let week = [];
+    for (let i = 0; i < hours.length; i++) {
+      if (hours[i].day === currentDay) {
+        currentDayText = currentDayText.concat(`, ${moment(hours[i].start, "HH:mm").format("LT")} to ${moment(hours[i].end, "HH:mm").format("LT")}`)
+        currentDay = hours[i].day  as number;
+      } else {
+        if (currentDayText.length) {
+          week.push(currentDayText)
+        }
+        currentDayText = `${moment(hours[i].start, "HH:mm").format("LT")} to ${moment(hours[i].end, "HH:mm").format("LT")}`;
+        currentDay++;
+      }
+    }
+    week.push(currentDayText);
+    if (week.length < 7) {
+        for (let i = week.length; i < 7; i++) {
+            week.push("Not Available")
+        }
+    }
+    return week;
+  }
+
+  useEffect(() => {
+    if (props.hours.length) {
+      setFormattedHours(mapHours(props.hours))
+    }
+  }, [props.hours])
 
   return (
     <Grid className={classes.root}>
@@ -45,7 +84,7 @@ const Schedule = (props: Props) => {
             className={classes.left}
           >
             {days.map((day, index) => (
-              <Typography key={index}>{day}:</Typography>
+              <Typography key={day+index}>{day}:</Typography>
             ))}
           </Grid>
           <Grid
@@ -55,9 +94,9 @@ const Schedule = (props: Props) => {
             alignItems="flex-start"
             className={classes.right}
           >
-            {props.hours.map(day => (
-              <Typography key={day.day} noWrap>
-                {day.start} to {day.end}
+            {formattedHours.map((day, index) => (
+              <Typography key={day + index} noWrap>
+                {day}
               </Typography>
             ))}
           </Grid>

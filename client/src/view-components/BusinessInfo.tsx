@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: "5px"
   },
   heading: {
-    fontSize: "20px"
+    fontSize: "20px",
+    fontWeight: "bold"
   },
   header: {
     // backgroundColor: "white"
