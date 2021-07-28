@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Business } from '../models/business';
 import BusinessList from '../view-components/BusinessList';
 import { GoogleCoords } from '../models/googleCoords';
-import GoogleMap from '../view-components/GoogleMap';
+import GoogleMap from './GoogleMap';
 import SearchBar from '../controller-components/SearchBar';
 
 const useStyles = makeStyles(() => ({

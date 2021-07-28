@@ -8,7 +8,7 @@ import Address from '../view-components/Address';
 import { BusinessDetails as Details } from '../models/businessDetails';
 import Categories from '../view-components/Categories';
 import { GoogleCoords } from '../models/googleCoords';
-import GoogleMap from '../view-components/GoogleMap';
+import GoogleMap from './GoogleMap';
 import Ratings from '../view-components/Ratings';
 import Schedule from '../view-components/Schedule';
 import Transactions from '../view-components/Transactions';

@@ -8,4 +8,4 @@
  * 3. The "API key created" popup displays your newly created API key.
  */
 
- export const YELP_API_KEY = 'YOUR_API_KEY_HERE';
+ export const GOOGLE_API_KEY = 'YOUR_API_KEY_HERE';

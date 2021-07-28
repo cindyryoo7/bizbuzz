@@ -2,6 +2,7 @@ import cors from 'cors';
 import logger from 'morgan';
 import express from 'express';
 import cookieParser from 'cookie-parser';
+// import path from 'path'; // uncomment out when deploying to heroku
 import {
   getBusinessesByLatLong,
   getBusinessesByAddress,
@@ -17,6 +18,12 @@ app.use(logger('dev'));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// app.use(express.static(path.join(__dirname, 'build'))); // uncomment out when deploying to heroku
+
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html')); // uncomment out when deploying to heroku
+// });
 
 app.get(`/search/:latitude/:longitude`, (req: express.Request, res: express.Response) => {
   getBusinessesByLatLong(req.params.latitude, req.params.longitude)
