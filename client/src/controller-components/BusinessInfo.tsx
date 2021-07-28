@@ -1,25 +1,25 @@
-import { Grid, Typography, Chip, makeStyles, Theme } from '@material-ui/core';
-import { BusinessDetails as Details } from '../models/businessDetails';
-import GoogleMap from '../controller-components/GoogleMap';
-import { Coordinates } from '../models/coordinates';
 import { useState, useEffect } from 'react';
-import Schedule from './Schedule';
-import Ratings from './Ratings';
-import Categories from './Categories';
-import Transactions from './Transactions';
-import Address from './Address';
+import {
+  Grid,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
+import Address from '../view-components/Address';
+import { BusinessDetails as Details } from '../models/businessDetails';
+import Categories from '../view-components/Categories';
 import { GoogleCoords } from '../models/googleCoords';
-
+import GoogleMap from '../view-components/GoogleMap';
+import Ratings from '../view-components/Ratings';
+import Schedule from '../view-components/Schedule';
+import Transactions from '../view-components/Transactions';
 
 type Props = {
   details: Details,
   setLoading: (loading: boolean) => void
 }
 
-
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    // borderRight: "1px grey solid"
     backgroundColor: "white"
   },
   name: {
@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: "bold"
   },
   header: {
-    // backgroundColor: "white"
     width: "100%"
   },
   ratings: {
@@ -49,7 +48,6 @@ const BusinessInfo = (props: Props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    // console.log('name', props.details.name);
     if (props.details.name) {
       setCoordinates({
         lat: props.details.coordinates.latitude,
@@ -57,11 +55,6 @@ const BusinessInfo = (props: Props) => {
       });
     }
   }, [props.details])
-
-  // useEffect(() => {
-  //   console.log('coordinates', coordinates);
-  // }, [coordinates])
-
 
   return (
     <Grid
@@ -120,15 +113,16 @@ const BusinessInfo = (props: Props) => {
       </Grid>
       <Grid className={classes.location}>
         <Typography className={classes.heading}>Location:</Typography>
-        {/* <GoogleMap center={coordinates} markers={[coordinates]} zoom={13} isMarkerShown={true} dimensions={{
-          width: "400px",
-          height: "400px"
-        }}/> */}
-        <GoogleMap center={coordinates} markers={[coordinates]} zoom={13} isMarkerShown={true}
-           dimensions={{
+        <GoogleMap
+          center={coordinates}
+          markers={[coordinates]}
+          zoom={13}
+          isMarkerShown={true}
+          dimensions={{
              width: "400px",
              height: "400px"
-        }}/>
+          }}
+        />
         {props.details.location && props.details.location.display_address.length
           ? <Address address={props.details.location.display_address} />
           : null
@@ -144,7 +138,5 @@ const BusinessInfo = (props: Props) => {
   );
 
 }
-
-// containerElement={<div style={{ height: `400px` }} />}
 
 export default BusinessInfo;

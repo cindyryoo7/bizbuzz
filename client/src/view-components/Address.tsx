@@ -1,9 +1,12 @@
-import { makeStyles, Theme, Typography, Grid } from '@material-ui/core';
-import { Business } from '../models/business';
+import {
+  Grid,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    padding: "5px"
+    paddingBottom: "5px"
   }
 }))
 

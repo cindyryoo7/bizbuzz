@@ -1,9 +1,12 @@
-import { makeStyles, Theme, Typography, Grid, Chip } from '@material-ui/core';
+import {
+  Chip,
+  Grid,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
-import { Business } from '../models/business';
-import Categories from './Categories';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     padding: "5px"
   },

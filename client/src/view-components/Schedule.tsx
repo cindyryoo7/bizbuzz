@@ -1,15 +1,18 @@
-import { Grid, Typography, makeStyles, Theme } from '@material-ui/core';
+import { useState, useEffect } from 'react';
+import {
+  Grid,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import { Hours } from '../models/hours';
 import moment from 'moment';
-import { useState, useEffect } from 'react';
 
 type Props = {
   hours: Hours[]
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    padding: "5px",
     width: "100%"
   },
   heading: {
@@ -29,10 +32,6 @@ const Schedule = (props: Props) => {
   const [formattedHours, setFormattedHours] = useState<string[]>([]);
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  useEffect(() => {
-    console.log(props.hours)
-  }, [])
-
   const mapHours = (hours: Hours[]) => {
     let currentDay = -1;
     let currentDayText = "";
@@ -51,9 +50,9 @@ const Schedule = (props: Props) => {
     }
     week.push(currentDayText);
     if (week.length < 7) {
-        for (let i = week.length; i < 7; i++) {
-            week.push("Not Available")
-        }
+      for (let i = week.length; i < 7; i++) {
+        week.push("Not Available")
+      }
     }
     return week;
   }

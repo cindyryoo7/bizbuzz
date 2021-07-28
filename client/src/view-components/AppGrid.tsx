@@ -1,8 +1,7 @@
-import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import Routes from '../controller-components/Routes';
 
-const useStyles = makeStyles((/* theme */) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     fontSize: "20px",
@@ -17,13 +16,13 @@ const AppGrid = () => {
 
   return(
     <Grid
-      className={classes.root}
       container
       direction="column"
       justifyContent="center"
       alignItems="center"
+      className={classes.root}
     >
-      <Routes />
+      <Routes/>
     </Grid>
   )
 }

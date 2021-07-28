@@ -1,15 +1,18 @@
-import { Grid, Typography, makeStyles, Theme } from '@material-ui/core';
+import {
+  Grid,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import { Review as ReviewType } from '../models/review';
 import Review from './Review';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
     backgroundColor: "#fbe8a6",
   },
   heading: {
     fontSize: "40px",
-    // align: "left",
     padding: "10px"
   },
   list: {
@@ -35,10 +38,13 @@ const ReviewsList = (props: Props) => {
           direction="column"
           justifyContent="center"
           alignItems="center"
-
         >
           {props.reviews.map(review => (
-            <Review key={review.id} review={review} reviewCount={props.reviewCount}/>
+            <Review
+              key={review.id}
+              review={review}
+              reviewCount={props.reviewCount}
+            />
           ))}
         </Grid>
       </Grid>
@@ -46,7 +52,6 @@ const ReviewsList = (props: Props) => {
   } else {
     return null;
   }
-
 }
 
 export default ReviewsList;

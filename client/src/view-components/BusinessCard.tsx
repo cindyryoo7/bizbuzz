@@ -1,10 +1,22 @@
-import { makeStyles, Theme, Card, CardActionArea, Grid } from '@material-ui/core';
+import {
+  Card,
+  CardActionArea,
+  Grid,
+  makeStyles,
+} from '@material-ui/core';
 import { Business } from '../models/business';
-import CardHeader from '../view-components/CardHeader';
-import CardBody from '../view-components/CardBody';
-import CardFooter from '../view-components/CardFooter';
+import CardBody from './CardBody';
+import CardFooter from './CardFooter';
+import CardHeader from './CardHeader';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
+  root: {
+    width:"100%"
+  },
+  card: {
+    height:"100%",
+    width:"100%"
+  }
 }))
 
 type Props = {
@@ -16,8 +28,12 @@ const BusinessCard = (props: Props) => {
   const classes = useStyles();
 
   return (
-    <Grid container direction="column" style={{width:"100%"}}>
-      <Card style={{height:"100%", width:"100%"}}>
+    <Grid
+      container
+      direction="column"
+      className={classes.root}
+    >
+      <Card className={classes.card}>
         <CardActionArea>
           <CardHeader business={props.business} index={props.index}/>
           <CardBody business={props.business} index={props.index}/>

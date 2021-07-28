@@ -1,15 +1,23 @@
-import { Grid, Card, CardActionArea, Typography, CardHeader, Avatar, makeStyles, Link } from '@material-ui/core';
-import { Review as ReviewType } from '../models/review';
-import Ratings from './Ratings';
+import {
+  Avatar,
+  Card,
+  CardActionArea,
+  CardHeader,
+  Grid,
+  Link,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import moment from 'moment';
+import Ratings from './Ratings';
+import { Review as ReviewType } from '../models/review';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: "90%",
   },
   card: {
-    // backgroundColor: "#fbe8a6",
     height: "100%",
     width: "100%",
     margin: "10px"
@@ -55,13 +63,10 @@ const Review = (props: Props) => {
             className={classes.header}
           >
             <CardHeader
-              avatar={
-                <Avatar alt="reviewer-avatar" src={props.review.user.image_url} />
-              }
+              avatar={ <Avatar alt="reviewer-avatar" src={props.review.user.image_url} />}
               title={<Typography noWrap>{props.review.user.name}</Typography>}
               subheader={<Typography noWrap>{moment(props.review.time_created).format("MMMM D, YYYY [at] LT")}</Typography>}
-            >
-            </CardHeader>
+            />
             <Ratings rating={props.review.rating}/>
           </Grid>
           <Typography className={classes.text}>{props.review.text}</Typography>
@@ -72,7 +77,11 @@ const Review = (props: Props) => {
             justifyContent="flex-end"
             className={classes.link}
           >
-            <Link href={props.review.url} color="secondary" underline="hover">
+            <Link
+              href={props.review.url}
+              color="secondary"
+              underline="hover"
+            >
               See more...
             </Link>
           </Grid>
@@ -80,7 +89,6 @@ const Review = (props: Props) => {
       </Card>
     </Grid>
   );
-
 }
 
 export default Review;

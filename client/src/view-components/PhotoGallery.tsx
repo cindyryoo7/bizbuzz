@@ -1,28 +1,15 @@
-import { Grid, ImageList, ImageListItem, makeStyles, Theme } from '@material-ui/core';
+import {
+  ImageList,
+  ImageListItem,
+  Grid,
+  makeStyles,
+} from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    // display: 'flex',
-    // flexWrap: 'wrap',
-    // justifyContent: 'space-evenly',
-    // overflow: 'hidden',
-    // backgroundColor: "white"
-    // height: "100%",
-    // width: "100%"
-
+    width: "100%",
+    flex: 1
   },
-  imageList: {
-    // width: '100%',
-    // height: "100%",
-    // justifyContent: 'center',
-    // width: "100%"
-  },
-  image: {
-    // paddingLeft: "50px",
-    // paddingRight: "50px",
-    // height: "auto",
-    // width: "100%"
-  }
 }))
 
 type Props = {
@@ -45,11 +32,10 @@ const PhotoGallery = (props: Props) => {
           gap={2}
           cols={3}
           rowHeight={300}
-          className={classes.imageList}
         >
           {props.photos.map((photo, index) => (
             <ImageListItem key={index} cols={1} >
-              <img src={photo} alt={photo+index} className={classes.image}/>
+              <img src={photo} alt={photo+index}/>
             </ImageListItem>
           ))}
         </ImageList>

@@ -1,9 +1,12 @@
-import React from 'react';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
-import HoneyComb from "../assets/honeycomb-transparent.jpeg";
-import Bee from "../assets/bee.jpeg";
+import {
+  Grid,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
+import Bee from '../assets/bee.jpeg';
+import HoneyComb from '../assets/honeycomb-transparent.jpeg';
 
-const useStyles = makeStyles((/* theme */) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     width: "100%",
@@ -68,22 +71,3 @@ const Header = (props: Props) => {
 }
 
 export default Header;
-
-// return(
-  // <Grid
-  //   container
-  //   direction="column"
-  //   alignItems="center"
-  //   justifyContent="center"
-  //   className={classes.root}
-  // >
-  //   <Typography className={classes.heading}>
-  //     BizBuzz
-  //   </Typography>
-  //   <Typography className={classes.subheading}>
-  //     Find the <em>buzz</em> about your local <em>biz</em>.
-  //   </Typography>
-  // </Grid>
-
-
-

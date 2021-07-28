@@ -1,30 +1,30 @@
-import React, {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import {
+  Grid,
+  Link,
+  makeStyles,
+} from '@material-ui/core';
 import axios from 'axios';
-import { Grid, Link, makeStyles, Theme } from '@material-ui/core';
+import BusinessDetails from '../view-components/BusinessDetails';
 import { BusinessDetails as Details } from '../models/businessDetails';
-import { Review } from '../models/review';
 import PhotoGallery from '../view-components/PhotoGallery';
-import BusinessDetails from './BusinessDetails';
-import { useHistory } from "react-router-dom";
+import { Review } from '../models/review';
+import { useHistory } from 'react-router-dom';
 
 type Props = {
   setLoading: (loading: boolean) => void
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    // display: 'flex',
-    // flexWrap: 'wrap',
-    // justifyContent: 'space-evenly',
-    // overflow: 'hidden',
-    // backgroundColor: "white",
-    // height: "100%",
-    // width: "100%"
-    // backgroundColor: "#fbe8a6",
+    flex: 1,
+    width: "100%",
   },
   link: {
     padding: "10px",
-    // backgroundColor: "white"
+  },
+  gallery: {
+    width: "100%"
   }
 }))
 
@@ -81,17 +81,24 @@ const BusinessPage = (props: Props) => {
         alignItems="flex-start"
         className={classes.link}
       >
-        <Link onClick={handleBack} color="secondary" underline="always">{"< Back to Results"}</Link>
+        <Link
+          color="secondary"
+          underline="always"
+          onClick={handleBack}
+        >
+          {"< Back to Results"}
+        </Link>
       </Grid>
-      <Grid
-        style={{width: "100%"}}
-      >
+      <Grid className={classes.gallery}>
         <PhotoGallery photos={businessDetails.photos} />
       </Grid>
-      <BusinessDetails reviews={businessReviews} details={businessDetails} setLoading={props.setLoading}/>
+      <BusinessDetails
+        reviews={businessReviews}
+        details={businessDetails}
+        setLoading={props.setLoading}
+      />
     </Grid>
   );
-
 }
 
 export default BusinessPage;

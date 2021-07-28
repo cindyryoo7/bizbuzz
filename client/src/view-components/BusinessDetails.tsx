@@ -1,8 +1,12 @@
-import { Grid, makeStyles, Theme, Divider } from '@material-ui/core';
-import ReviewsList from '../view-components/ReviewsList';
+import {
+  Divider,
+  Grid,
+  makeStyles,
+} from '@material-ui/core';
 import { BusinessDetails as Details } from '../models/businessDetails';
+import BusinessInfo from '../controller-components/BusinessInfo';
 import { Review } from '../models/review';
-import BusinessInfo from '../view-components/BusinessInfo';
+import ReviewsList from './ReviewsList';
 
 type Props = {
   reviews: Review[],
@@ -10,9 +14,9 @@ type Props = {
   setLoading: (loading: boolean) => void
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    // backgroundColor: "white",
+    width: "100%"
   },
 }))
 
@@ -25,15 +29,18 @@ const BusinessDetails = (props: Props) => {
       direction="row"
       justifyContent="space-evenly"
       alignItems="flex-start"
-      className={classes.root}
       wrap="nowrap"
+      className={classes.root}
     >
       <BusinessInfo details={props.details} setLoading={props.setLoading}/>
       <Divider orientation="vertical" flexItem/>
-      <ReviewsList reviews={props.reviews} name={props.details.name} reviewCount={props.details.review_count}/>
+      <ReviewsList
+        reviews={props.reviews}
+        name={props.details.name}
+        reviewCount={props.details.review_count}
+      />
     </Grid>
   );
-
 }
 
 export default BusinessDetails;

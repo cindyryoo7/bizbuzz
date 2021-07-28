@@ -1,8 +1,12 @@
-import { makeStyles, Theme, Typography, Grid } from '@material-ui/core';
+import {
+  Grid,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import { Business } from '../models/business';
 import Ratings from './Ratings';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     width: "100%",
@@ -44,17 +48,14 @@ const CardHeader = (props: Props) => {
       wrap="nowrap"
       className={classes.root}
     >
-      <Grid
-        item
-        className={classes.left}
-      >
+      <Grid item className={classes.left}>
         <Typography
           color="secondary"
           component="p"
           className={classes.name}
           noWrap
         >
-            {props.index}. {props.business.name}
+          {props.index}. {props.business.name}
         </Typography>
       </Grid>
       <Grid
@@ -69,10 +70,7 @@ const CardHeader = (props: Props) => {
           <Ratings rating={props.business.rating}/>
         </Grid>
         <Grid className={classes.reviews}>
-          <Typography
-            noWrap
-            align="right"
-          >
+          <Typography noWrap align="right">
             ({props.business.review_count})
           </Typography>
         </Grid>

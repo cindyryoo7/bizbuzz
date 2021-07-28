@@ -1,17 +1,18 @@
-import {  useState } from 'react';
-import { AppBar, Toolbar, makeStyles, Theme, alpha, Typography, Grid, Button, TextField, Box, Paper, IconButton, InputBase, Divider } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import { Coordinates } from '../models/coordinates';
-import SearchBar from "material-ui-search-bar";
-import CloseIcon from '@material-ui/icons/Close';
-import { Brightness1 } from '@material-ui/icons';
+import { useState } from 'react';
+import {
+  IconButton,
+  Grid,
+  makeStyles,
+  Paper,
+  Typography,
+} from '@material-ui/core';
 import { Business } from '../models/business';
 import { GoogleCoords } from '../models/googleCoords';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import SearchBar from "material-ui-search-bar";
+import SearchIcon from '@material-ui/icons/Search';
 
-
-
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     padding: '2px 4px',
     display: 'flex',
@@ -63,10 +64,6 @@ const NavBar = (props: Props) => {
   const classes = useStyles();
 
   const handleSubmit = () => {
-    // console.log('handleSubmit firing')
-
-    // props.setLoading(true);
-    // handleSearchLocation(`for ${value}`);
     if (props.businesses.length) {
       props.setCenterCoords({
         lat: props.businesses[0].coordinates.latitude,
@@ -77,13 +74,7 @@ const NavBar = (props: Props) => {
     }
   }
 
-  // const handleSearchLocation = (location: string): void => {
-  //   props.setCurrentLocationPhysical(location);
-  // }
-
   const handleLocationPermission = () => {
-    // console.log('handleLocationPermission firing')
-    // props.setLoading(true);
     navigator.geolocation.getCurrentPosition((position) => {
       let currentLocation = {
         lat: position.coords.latitude,
@@ -122,7 +113,6 @@ const NavBar = (props: Props) => {
           aria-label="directions"
           className={classes.iconButton}
           onClick={handleLocationPermission}
-
         >
           <LocationOnOutlinedIcon/>
           <Typography noWrap>Use my current location</Typography>

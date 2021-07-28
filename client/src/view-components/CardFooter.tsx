@@ -1,9 +1,9 @@
-import { makeStyles, Theme, Grid } from '@material-ui/core';
+import { Grid, makeStyles, } from '@material-ui/core';
 import { Business } from '../models/business';
 import Categories from './Categories';
 import Transactions from './Transactions';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     paddingLeft: "5px",
     paddingBottom: "10px"
@@ -32,7 +32,7 @@ const CardFooter = (props: Props) => {
         ? <Transactions transactions={props.business.transactions}/>
         : null
       }
-  </Grid>
+    </Grid>
   )
 }
 
