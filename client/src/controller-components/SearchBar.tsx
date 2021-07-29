@@ -9,7 +9,7 @@ import {
 import { Business } from '../models/business';
 import { GoogleCoords } from '../models/googleCoords';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import SearchBar from "material-ui-search-bar";
+import SearchBar from 'material-ui-search-bar';
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles(() => ({
