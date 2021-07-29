@@ -88,14 +88,18 @@ const HomepageController = (props: Props) => {
       .then(result => result.data)
       .then(result => {
         setBusinesses(result);
-        return result;
+        if (!result.length) {
+          throw new Error();
+        } else {
+          return result;
+        }
       })
       .then(result => {
         parseCoordinates(result);
        })
       .catch(err => {
         console.log(err);
-        alert("Could not find any results near you. Try searching for a physical location.");
+        alert("Could not find any results near you. Try searching for a physical location after refreshing the page.");
       })
   }
 
