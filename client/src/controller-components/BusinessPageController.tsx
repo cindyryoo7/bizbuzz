@@ -67,38 +67,42 @@ const BusinessPageController = (props: Props) => {
     }
   }, [businessId])
 
-  return (
-    <Grid
-      container
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      className={classes.root}
-    >
+  if (businessDetails.name && businessReviews.length) {
+    return (
       <Grid
         container
-        direction="row"
-        alignItems="flex-start"
-        className={classes.link}
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        className={classes.root}
       >
-        <Link
-          color="secondary"
-          underline="always"
-          onClick={handleBack}
+        <Grid
+          container
+          direction="row"
+          alignItems="flex-start"
+          className={classes.link}
         >
-          {"< Back to Results"}
-        </Link>
+          <Link
+            color="secondary"
+            underline="always"
+            onClick={handleBack}
+          >
+            {"< Back to Results"}
+          </Link>
+        </Grid>
+        <Grid className={classes.gallery}>
+          <PhotoGallery photos={businessDetails.photos} />
+        </Grid>
+        <BusinessDetails
+          reviews={businessReviews}
+          details={businessDetails}
+          setLoading={props.setLoading}
+        />
       </Grid>
-      <Grid className={classes.gallery}>
-        <PhotoGallery photos={businessDetails.photos} />
-      </Grid>
-      <BusinessDetails
-        reviews={businessReviews}
-        details={businessDetails}
-        setLoading={props.setLoading}
-      />
-    </Grid>
-  );
+    );
+  } else {
+    return null;
+  }
 }
 
 export default BusinessPageController;
