@@ -87,8 +87,6 @@ const HomepageController = (props: Props) => {
       .get(`/search/${latitude}/${longitude}`)
       .then(result => result.data)
       .then(result => {
-        console.log('getBusinessesByLatLong firing')
-        console.log('businesses result', result);
         setBusinesses(result);
         return result;
       })
@@ -145,8 +143,8 @@ const HomepageController = (props: Props) => {
                     zoom={13}
                     isMarkerShown={true}
                     dimensions={{
-                      width: "650px",
-                      height: "650px"
+                      width: "665px",
+                      height: "665px"
                     }}
                   />
                 : null

@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: "white"
   },
-  name: {
+  title: {
     fontSize: "40px",
     width: "100%",
     padding: "5px"
@@ -38,7 +38,11 @@ const useStyles = makeStyles(() => ({
     width: "100%"
   },
   ratings: {
-    paddingRight: "5px"
+    paddingRight: "5px",
+    width: "35%"
+  },
+  name: {
+    width: "65%"
   }
 }))
 
@@ -72,12 +76,12 @@ const BusinessInfo = (props: Props) => {
         <Grid
           container
           direction="row"
-          justifyContent="space-evenly"
+          justifyContent="flex-start"
           alignItems="center"
           wrap="nowrap"
         >
-          <Grid item>
-            <Typography className={classes.name} noWrap>{props.details.name}</Typography>
+          <Grid item className={classes.name}>
+            <Typography className={classes.title}>{props.details.name}</Typography>
           </Grid>
           <Grid
             item
