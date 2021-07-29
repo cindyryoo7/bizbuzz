@@ -15,7 +15,7 @@ import Transactions from './Transactions';
 
 type Props = {
   details: Details,
-  setLoading: (loading: boolean) => void
+  mapCenter: GoogleCoords,
 }
 
 const useStyles = makeStyles(() => ({
@@ -118,7 +118,7 @@ const BusinessInfo = (props: Props) => {
       <Grid className={classes.location}>
         <Typography className={classes.heading}>Location:</Typography>
         <GoogleMapController
-          center={coordinates}
+          center={props.mapCenter}
           markers={[coordinates]}
           zoom={13}
           isMarkerShown={true}

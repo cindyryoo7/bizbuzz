@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   GoogleApiWrapper,
   Map,
@@ -6,6 +8,7 @@ import {
 import { Grid, makeStyles, } from '@material-ui/core';
 import { GOOGLE_API_KEY } from '../.env';
 import { GoogleCoords } from '../models/googleCoords';
+import { useEffect } from 'react';
 
 type Props = {
   google: any,
@@ -26,14 +29,20 @@ const useStyles = makeStyles({
 });
 
 export const GoogleMapController = (props: Props) => {
+  const [mapCenter, setMapCenter] = useState<GoogleCoords>(props.center);
+
   const classes = useStyles(props);
+
+  useEffect(() => {
+    setMapCenter(props.center);
+  }, [props.center]);
 
   return (
     <Grid className={classes.root}>
       <Map
         google={props.google}
         zoom={props.zoom}
-        center={props.center}
+        center={mapCenter}
         style={{
           width: props.dimensions.width,
           height: props.dimensions.height,

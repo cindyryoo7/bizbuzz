@@ -7,12 +7,14 @@ import {
 import axios from 'axios';
 import BusinessDetails from '../view-components/BusinessDetails';
 import { BusinessDetails as Details } from '../models/businessDetails';
+import { GoogleCoords } from '../models/googleCoords';
 import PhotoGallery from '../view-components/PhotoGallery';
 import { Review } from '../models/review';
 import { useHistory } from 'react-router-dom';
 
 type Props = {
-  setLoading: (loading: boolean) => void
+  mapCenter: GoogleCoords,
+  setMapCenter: (mapCenter: GoogleCoords) => void
 }
 
 const useStyles = makeStyles(() => ({
@@ -44,7 +46,16 @@ const BusinessPageController = (props: Props) => {
     axios
       .get(`/${id}`)
       .then(result => result.data)
-      .then(result => { setBusinessDetails(result) })
+      .then(result => {
+        setBusinessDetails(result);
+        return result;
+      })
+      .then(result => {
+        props.setMapCenter({
+          lat: result.coordinates.latitude,
+          lng: result.coordinates.longitude
+        })
+      })
       .catch(err => { console.log(err) })
   }
 
@@ -96,7 +107,7 @@ const BusinessPageController = (props: Props) => {
         <BusinessDetails
           reviews={businessReviews}
           details={businessDetails}
-          setLoading={props.setLoading}
+          mapCenter={props.mapCenter}
         />
       </Grid>
     );

@@ -23,12 +23,13 @@ const useStyles = makeStyles(() => ({
   map: {
     width: "100%",
     paddingRight: "15px",
+    paddingLeft: "10px"
   },
 }))
 
 type Props = {
-  loading: boolean,
-  setLoading: (loading: boolean) => void,
+  mapCenter: GoogleCoords,
+  setMapCenter: (mapCenter: GoogleCoords) => void
 }
 
 const HomepageController = (props: Props) => {
@@ -40,7 +41,6 @@ const HomepageController = (props: Props) => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [markers, setMarkers] = useState<GoogleCoords[]>([]);
   const [updateType, setUpdateType] = useState<string>("coordinates");
-  const [mapCenter, setMapCenter] = useState<GoogleCoords>(centerCoords);
 
   const classes = useStyles();
 
@@ -59,7 +59,7 @@ const HomepageController = (props: Props) => {
         }
       ));
       setMarkers(allCoordinates);
-      setMapCenter(allCoordinates[0]);
+      props.setMapCenter(allCoordinates[0]);
     }
   }
 
@@ -119,7 +119,6 @@ const HomepageController = (props: Props) => {
         >
           <SearchBarController
             businesses={businesses}
-            setLoading={props.setLoading}
             setCenterCoords={setCenterCoords}
             setCenterPhysical={setCenterPhysical}
             setUpdateType={setUpdateType}
@@ -138,7 +137,7 @@ const HomepageController = (props: Props) => {
             <Grid item className={classes.map}>
               {businesses.length && markers.length
                 ? <GoogleMapController
-                    center={mapCenter}
+                    center={props.mapCenter}
                     markers={markers}
                     zoom={13}
                     isMarkerShown={true}

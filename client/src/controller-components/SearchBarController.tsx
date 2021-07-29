@@ -52,7 +52,6 @@ const useStyles = makeStyles(() => ({
 
 type Props = {
   businesses: Business[],
-  setLoading: (loading: boolean) => void,
   setCenterCoords: (centerCoords: GoogleCoords) => void,
   setCenterPhysical: (centerPhysical: string) => void,
   setUpdateType: (updateType: string) => void

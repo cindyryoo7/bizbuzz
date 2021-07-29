@@ -34,11 +34,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-type Props = {
-  setLoading: (loading: boolean) => void
-}
-
-const Header = (props: Props) => {
+const Header = () => {
   const classes = useStyles();
 
   return(

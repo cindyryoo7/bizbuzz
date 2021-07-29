@@ -5,13 +5,14 @@ import {
 } from '@material-ui/core';
 import { BusinessDetails as Details } from '../models/businessDetails';
 import BusinessInfo from './BusinessInfo';
+import { GoogleCoords } from '../models/googleCoords';
 import { Review } from '../models/review';
 import ReviewsList from './ReviewsList';
 
 type Props = {
   reviews: Review[],
   details: Details,
-  setLoading: (loading: boolean) => void
+  mapCenter: GoogleCoords,
 }
 
 const useStyles = makeStyles(() => ({
@@ -32,7 +33,10 @@ const BusinessDetails = (props: Props) => {
       wrap="nowrap"
       className={classes.root}
     >
-      <BusinessInfo details={props.details} setLoading={props.setLoading}/>
+      <BusinessInfo
+        details={props.details}
+        mapCenter={props.mapCenter}
+      />
       <Divider orientation="vertical" flexItem/>
       <ReviewsList
         reviews={props.reviews}
