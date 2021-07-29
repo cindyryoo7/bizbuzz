@@ -39,10 +39,10 @@ const useStyles = makeStyles(() => ({
   },
   ratings: {
     paddingRight: "5px",
-    width: "35%"
+    width: "40%"
   },
   name: {
-    width: "65%"
+    width: "60%"
   }
 }))
 
@@ -89,7 +89,7 @@ const BusinessInfo = (props: Props) => {
             direction="row"
             justifyContent="flex-end"
             alignItems="center"
-            wrap="nowrap"
+            // wrap="nowrap"
             className={classes.ratings}
           >
             <Grid>
@@ -101,7 +101,7 @@ const BusinessInfo = (props: Props) => {
                 noWrap
                 align="right"
               >
-                ({props.details.review_count})
+                ({props.details.review_count} reviews)
               </Typography>
             </Grid>
           </Grid>

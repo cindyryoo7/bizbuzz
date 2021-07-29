@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
     width: "20%"
   },
   right: {
-    width: "50%"
+    width: "70%"
   }
 }))
 

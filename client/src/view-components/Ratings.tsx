@@ -87,13 +87,15 @@ const Ratings = ({rating}: Props) => {
       <Typography align="right">{overallRating} of 5</Typography>
       &nbsp;
       {numberOfIcons.map((item, index) => (
-        <div key={"outer container" + item + index} className={classes.container}>
+        <div
+          key={"outer container" + item + index}
+          className={classes.container}
+        >
           <div
-            key={"inner container" + item + index}
             style={{ 'width': `${Number(item * 20)}px` }}
             className={classes.fill}
           >
-            <img key={"icon" + item + index} src={Image} alt="honeycomb icon" className={classes.outline}/>
+            <img src={Image} alt={"honeycomb rating icon" + index + " of 5"} className={classes.outline}/>
           </div>
         </div>
       ))}

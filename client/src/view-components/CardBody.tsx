@@ -12,6 +12,9 @@ const useStyles = makeStyles(() => ({
   },
   details: {
     padding: "5px"
+  },
+  address: {
+    padding: "5px"
   }
 }))
 
@@ -32,10 +35,12 @@ const CardBody = (props: Props) => {
       wrap="nowrap"
       className={classes.root}
     >
-      {props.business.location.display_address.length
-        ? <Address address={props.business.location.display_address} />
-        : null
-      }
+      <Grid item className={classes.address}>
+        {props.business.location.display_address.length
+          ? <Address address={props.business.location.display_address} />
+          : null
+        }
+      </Grid>
       <Grid
         container
         direction="column"

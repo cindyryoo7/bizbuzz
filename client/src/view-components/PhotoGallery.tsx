@@ -34,8 +34,8 @@ const PhotoGallery = (props: Props) => {
           rowHeight={300}
         >
           {props.photos.map((photo, index) => (
-            <ImageListItem key={index} cols={1} >
-              <img src={photo} alt={photo+index}/>
+            <ImageListItem key={index} cols={1}>
+              <img src={photo} alt={"yelp photo" + index + "of " + props.photos.length}/>
             </ImageListItem>
           ))}
         </ImageList>

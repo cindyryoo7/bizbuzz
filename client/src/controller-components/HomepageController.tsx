@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     paddingBottom: "10px",
   },
   resultsText: {
-    padding: "10px",
+    padding: "15px",
     fontStyle: "italic"
   },
   map: {

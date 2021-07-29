@@ -23,11 +23,12 @@ const useStyles = makeStyles(() => ({
     paddingLeft: "5%"
   },
   left: {
-    width: "60%",
+    width: "55%",
     padding: "5px"
   },
   right: {
-    width: "40%"
+    width: "45%",
+    paddingTop: "10px"
   }
 }))
 
@@ -71,7 +72,7 @@ const CardHeader = (props: Props) => {
         </Grid>
         <Grid className={classes.reviews}>
           <Typography noWrap align="right">
-            ({props.business.review_count})
+            ({props.business.review_count} reviews)
           </Typography>
         </Grid>
       </Grid>

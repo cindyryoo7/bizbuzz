@@ -50,7 +50,7 @@ const Header = (props: Props) => {
       wrap="nowrap"
       className={classes.root}
     >
-      <img src={HoneyComb} alt="honeycomb" className={classes.image}/>
+      <img src={HoneyComb} alt="honeycomb icon used for app logo" className={classes.image}/>
       <Grid
         container
         direction="column"
@@ -65,7 +65,7 @@ const Header = (props: Props) => {
           Find the <em>buzz</em> about your local <em>biz</em>.
         </Typography>
       </Grid>
-      <img src={Bee} alt="bee" className={classes.image}/>
+      <img src={Bee} alt="bee icon used for app logo" className={classes.image}/>
     </Grid>
   )
 }
