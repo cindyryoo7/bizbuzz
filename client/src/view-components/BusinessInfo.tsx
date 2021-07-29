@@ -4,14 +4,14 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import Address from '../view-components/Address';
+import Address from './Address';
 import { BusinessDetails as Details } from '../models/businessDetails';
-import Categories from '../view-components/Categories';
+import Categories from './Categories';
 import { GoogleCoords } from '../models/googleCoords';
-import GoogleMap from './GoogleMap';
-import Ratings from '../view-components/Ratings';
-import Schedule from '../view-components/Schedule';
-import Transactions from '../view-components/Transactions';
+import GoogleMapController from '../controller-components/GoogleMapController';
+import Ratings from './Ratings';
+import Schedule from './Schedule';
+import Transactions from './Transactions';
 
 type Props = {
   details: Details,
@@ -113,7 +113,7 @@ const BusinessInfo = (props: Props) => {
       </Grid>
       <Grid className={classes.location}>
         <Typography className={classes.heading}>Location:</Typography>
-        <GoogleMap
+        <GoogleMapController
           center={coordinates}
           markers={[coordinates]}
           zoom={13}

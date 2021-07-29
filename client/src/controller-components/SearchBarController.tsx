@@ -58,7 +58,7 @@ type Props = {
   setUpdateType: (updateType: string) => void
 }
 
-const NavBar = (props: Props) => {
+const SearchBarController = (props: Props) => {
   const [value, setValue] = useState<string>("");
 
   const classes = useStyles();
@@ -76,11 +76,10 @@ const NavBar = (props: Props) => {
 
   const handleLocationPermission = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      let currentLocation = {
+      props.setCenterCoords({
         lat: position.coords.latitude,
         lng: position.coords.longitude
-      }
-      props.setCenterCoords(currentLocation);
+      });
       props.setCenterPhysical('near you');
       props.setUpdateType("coordinates");
     })
@@ -122,4 +121,4 @@ const NavBar = (props: Props) => {
   );
 }
 
-export default NavBar;
+export default SearchBarController;

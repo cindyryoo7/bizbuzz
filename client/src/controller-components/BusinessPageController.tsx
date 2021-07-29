@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const BusinessPage = (props: Props) => {
+const BusinessPageController = (props: Props) => {
   const [businessId, setBusinessId] = useState<string>("");
   const [businessDetails, setBusinessDetails] = useState<Details>({} as Details);
   const [businessReviews, setBusinessReviews] = useState<Review[]>([]);
@@ -101,4 +101,4 @@ const BusinessPage = (props: Props) => {
   );
 }
 
-export default BusinessPage;
+export default BusinessPageController;

@@ -4,7 +4,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { BusinessDetails as Details } from '../models/businessDetails';
-import BusinessInfo from '../controller-components/BusinessInfo';
+import BusinessInfo from './BusinessInfo';
 import { Review } from '../models/review';
 import ReviewsList from './ReviewsList';
 

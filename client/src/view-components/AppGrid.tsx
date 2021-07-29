@@ -1,5 +1,5 @@
 import { Grid, makeStyles } from '@material-ui/core';
-import Routes from '../controller-components/Routes';
+import Routes from './Routes';
 
 const useStyles = makeStyles(() => ({
   root: {

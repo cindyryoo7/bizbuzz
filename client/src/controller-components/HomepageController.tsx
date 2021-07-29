@@ -9,8 +9,8 @@ import axios from 'axios';
 import { Business } from '../models/business';
 import BusinessList from '../view-components/BusinessList';
 import { GoogleCoords } from '../models/googleCoords';
-import GoogleMap from './GoogleMap';
-import SearchBar from '../controller-components/SearchBar';
+import GoogleMapController from './GoogleMapController';
+import SearchBarController from './SearchBarController';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,7 +32,7 @@ type Props = {
   setLoading: (loading: boolean) => void,
 }
 
-const Homepage = (props: Props) => {
+const HomepageController = (props: Props) => {
   const [centerCoords, setCenterCoords] = useState<GoogleCoords>({
     lat: 37.79118339155342,
     lng: -122.40330988014378
@@ -88,26 +88,22 @@ const Homepage = (props: Props) => {
       .get(`/search/${latitude}/${longitude}`)
       .then(result => result.data)
       .then(result => {
+        console.log('getBusinessesByLatLong firing')
+        console.log('businesses result', result);
         setBusinesses(result);
         return result;
       })
       .then(result => {
         parseCoordinates(result);
        })
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        console.log(err);
+        alert("Could not find any results near you. Try searching for a physical location.");
+      })
   }
 
   // conditionally render once a list of businesses has been returned by Yelp API
-  if (!businesses.length || props.loading) {
-    return (
-      <Grid
-        container
-        className={classes.root}
-      >
-        <CircularProgress color="secondary" />
-      </Grid>
-    )
-  } else {
+  if (businesses.length) {
     return(
       <Grid
         container
@@ -124,7 +120,7 @@ const Homepage = (props: Props) => {
           spacing={2}
           className={classes.root}
         >
-          <SearchBar
+          <SearchBarController
             businesses={businesses}
             setLoading={props.setLoading}
             setCenterCoords={setCenterCoords}
@@ -144,7 +140,7 @@ const Homepage = (props: Props) => {
             <BusinessList businesses={businesses}/>
             <Grid item className={classes.map}>
               {businesses.length && markers.length
-                ? <GoogleMap
+                ? <GoogleMapController
                     center={mapCenter}
                     markers={markers}
                     zoom={13}
@@ -161,7 +157,9 @@ const Homepage = (props: Props) => {
         </Grid>
       </Grid>
     )
+  } else {
+    return null;
   }
 }
 
-export default Homepage;
+export default HomepageController;

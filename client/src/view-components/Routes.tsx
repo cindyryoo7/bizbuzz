@@ -4,9 +4,9 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import BusinessPage from './BusinessPage';
-import Header from '../view-components/Header';
-import Homepage from './Homepage';
+import BusinessPageController from '../controller-components/BusinessPageController';
+import Header from './Header';
+import HomepageController from '../controller-components/HomepageController';
 
 
 const Routes = () => {
@@ -17,10 +17,10 @@ const Routes = () => {
       <Header setLoading={setLoading}/>
       <Switch>
         <Route exact path='/'>
-          <Homepage loading={loading} setLoading={setLoading}/>
+          <HomepageController loading={loading} setLoading={setLoading}/>
         </Route>
         <Route path='/business/:id'>
-          <BusinessPage setLoading={setLoading}/>
+          <BusinessPageController setLoading={setLoading}/>
         </Route>
       </Switch>
     </Router>

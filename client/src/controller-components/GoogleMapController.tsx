@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   }),
 });
 
-export const MapContainer = (props: Props) => {
+export const GoogleMapController = (props: Props) => {
   const classes = useStyles(props);
 
   return (
@@ -52,4 +52,4 @@ export const MapContainer = (props: Props) => {
 
 export default GoogleApiWrapper({
   apiKey: process.env.GOOGLE_API_KEY || GOOGLE_API_KEY
-})(MapContainer);
+})(GoogleMapController);
